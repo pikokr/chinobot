@@ -13,6 +13,7 @@ export default class Eval extends Command {
                     prompt: false
                 },
             ],
+            category: 'dev'
         });
     }
     async exec(msg: Message, {script}: {script: string}) {
@@ -22,8 +23,14 @@ export default class Eval extends Command {
         embed.addField('INPUT', '```js\n' + (input.length > 1000 ? input.slice(0,1000) + '...' : input) + '```')
         await msg.util?.send(embed)
         const prev = Date.now()
-        embed.addField('OUTPUT', '```js\n' + (await new Promise<string>(resolve => resolve(eval(input))).then(r=> {
+        embed.addField('OUTPUT', '```js\n' + (await new Promise(resolve => resolve(eval(input))).then(res=> {
             embed.setColor('GREEN')
+
+            let r
+
+            if (typeof res === 'string') r = res
+            else r = require('util').inspect(res)
+
             return r.length > 1000 ? r.slice(0,1000) + '...' : r
         }).catch(e => {
             embed.setColor('RED')

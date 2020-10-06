@@ -20,6 +20,7 @@ export default class Shell extends Command {
                     prompt: false
                 },
             ],
+            category: 'dev'
         });
     }
     async exec(msg: Message, {script}: {script: string}) {
