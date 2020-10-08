@@ -1,0 +1,17 @@
+{
+  "token": "",
+  "prefix": "c.",
+  "owner": ["628595345798201355"],
+  "database": "mongodb://localhost/chino",
+  "web": {
+    "port": 3060,
+    "socket": {
+      "namespaces": {
+        "bot": {
+          "secret": ""
+        }
+      }
+    },
+    "addr": ""
+  }
+}

@@ -1,12 +1,15 @@
 import Client from "./util/Client";
 import {CommandHandler, ListenerHandler} from "discord-akairo";
-import config from '../config.json'
+import config from '../../config.json'
 import {Message, MessageEmbed} from "discord.js";
 import {connect} from "mongoose";
 
 const client = new Client()
 
-connect(config.database).then(()=>client.login(config.token))
+connect(config.database, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(()=>client.login(config.token))
 
 Message.prototype.embed = function () {
     const embed = new MessageEmbed()
