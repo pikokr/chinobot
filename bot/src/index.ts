@@ -5,8 +5,9 @@ import config from '../config.json'
 const manager = new ShardingManager(path.join(__dirname, 'bot.ts'), {
     execArgv: [
         '-r',
-        'ts-node/register'
+        'ts-node/register',
     ],
+    shardArgs: ['--color'],
     token: config.token
 })
 

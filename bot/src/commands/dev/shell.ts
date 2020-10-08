@@ -24,6 +24,7 @@ export default class Shell extends Command {
         });
     }
     async exec(msg: Message, {script}: {script: string}) {
+        await msg.util!.send('실행중..')
         const out = await exec(script)
         if (out.stdout) {
             const d = out.stdout
