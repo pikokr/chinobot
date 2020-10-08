@@ -1,7 +1,7 @@
 import {Command} from "discord-akairo";
 import {GuildMember, Message} from "discord.js";
-import Warn from '../../models/Warn'
-import Guild from '../../models/Guild'
+import Warn from '../../../../models/Warn'
+import Guild from '../../../../models/Guild'
 
 export default class Clear extends Command {
     constructor() {

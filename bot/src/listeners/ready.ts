@@ -1,5 +1,5 @@
 import {Listener} from "discord-akairo";
-import GuildModel from "../models/Guild";
+import GuildModel from "../../../models/Guild";
 
 export default class Ready extends Listener {
     constructor() {

@@ -4,11 +4,12 @@ import request from "../../util/request";
 const router = Router()
 
 router.get('/shards',async (req, res) => {
-    const socket = Object.values(global.namespaces.bot!.sockets)[0]
-    if (!socket) {
-        return res.json({error: 'Bot is not connected to this server'})
+    const sockets = Object.values(global.namespaces.bot!.sockets)
+    const result: any[] = []
+    for (let socket of sockets) {
+        (await request(socket,'shards')).forEach((i:any)=>result.push(i))
     }
-    res.json(await request(socket, 'shards'))
+    res.json(result)
 })
 
 export default router
