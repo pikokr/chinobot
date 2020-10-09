@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  sys:
+    container_name: chinobot
+    build: .
+    ports:
+    - 3061:3060
