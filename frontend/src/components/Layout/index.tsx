@@ -15,6 +15,7 @@ class Layout extends Component<any> {
                         id
                         tag
                         username
+                        avatar
                     }
                 }
             }

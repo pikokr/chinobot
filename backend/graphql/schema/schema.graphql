@@ -11,6 +11,7 @@ type User {
     tag: String
     id: String
     username: String
+    avatar: String
 }
 
 type SelfUser {

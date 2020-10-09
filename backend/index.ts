@@ -17,14 +17,15 @@ app.use(cors())
 const apollo = new ApolloServer({
     schema,
     context: ({req}) => {
-        if (!req.headers.Authorization || !(<string>req.headers.Authorization).startsWith('Bearer ')) {
+        if (!req.headers.authorization || !(<string>req.headers.authorization).startsWith('Bearer ')) {
             return {
                 user: null
             }
         }
         try {
+            const user = jwt.verify(req.headers.authorization.slice('Bearer '.length), config.web.jwt)
             return {
-                user: jwt.verify((req.headers.Authorization as string).slice('Bearer '.length), config.web.jwt)
+                user: user
             }
         } catch (e) {
             return {

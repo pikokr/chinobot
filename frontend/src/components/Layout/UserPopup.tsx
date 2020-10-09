@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ListItem, ListItemText, Menu} from "@material-ui/core";
+import {Avatar, ListItem, ListItemIcon, ListItemText, Menu} from "@material-ui/core";
 
 class UserPopup extends Component<any> {
     render() {
@@ -8,7 +8,10 @@ class UserPopup extends Component<any> {
         return (
             <Menu open={this.props.open} anchorEl={this.props.anchorEl} onClose={this.props.onClose}>
                 <ListItem>
-                    <ListItemText primary={user.tag}/>
+                    <ListItemIcon>
+                        <Avatar src={`https://cdn.discordapp.com/avatars/${user.user.id}/${user.user.avatar}`}/>
+                    </ListItemIcon>
+                    <ListItemText primary={user.user.tag}/>
                 </ListItem>
             </Menu>
         );

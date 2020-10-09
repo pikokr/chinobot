@@ -15,7 +15,6 @@ export default {
             return {shards}
         },
         me: async (source, args, context) => {
-            console.log(context)
             return {
                 user: context.user
             }
