@@ -34,7 +34,7 @@ class Status extends Component {
                     치노봇 상태
                 </Typography>
                 <Typography variant="subtitle2">
-                    여기에서 치노봇의 상태를 확인하실 수 있습니다.
+                    여기에서 치노봇의 정보를 확인하실 수 있습니다.
                 </Typography>
                 <p/>
                 <Typography variant="h6">

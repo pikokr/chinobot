@@ -3,10 +3,14 @@ import connectReducers from "../../utils/connectReducers";
 import {AppBar, Button, IconButton, Toolbar, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
 import SideBar from "./SideBar";
-import {Menu as MenuIcon} from "@material-ui/icons";
+import {Menu as MenuIcon, Person as PersonIcon} from "@material-ui/icons";
+import {LOGIN_URL} from "../../config";
+import UserPopup from "./UserPopup";
 
 const Header = ({user}: any) => {
     const [sidebar, setSidebar] = React.useState(false)
+    const [userPopup, setUserPopup]: any = React.useState(null)
+
     return (
         <>
             <AppBar style={{
@@ -29,7 +33,17 @@ const Header = ({user}: any) => {
                     </Typography>
                     <div style={{flexGrow:1}}/>
                     {
-                        user ? '' : <Button color="inherit">로그인</Button>
+                        user ? (
+                            <>
+                                <IconButton color="inherit" onClick={e => setUserPopup(e.currentTarget)}>
+                                    <PersonIcon/>
+                                </IconButton>
+                                <UserPopup user={user} open={Boolean(userPopup)} anchorEl={userPopup} onClose={() => setUserPopup(null)}/>
+                            </>
+                        ) : <Button onClick={() => {
+                            localStorage.redirect = window.location.pathname
+                            window.location.assign(LOGIN_URL)
+                        }} color="inherit">로그인</Button>
                     }
                 </Toolbar>
             </AppBar>

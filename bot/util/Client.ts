@@ -1,6 +1,6 @@
 import {AkairoClient, CommandHandler, ListenerHandler} from "discord-akairo";
 import path from "path";
-import config from '../../../config.json'
+import config from '../../config.json'
 
 export default class Client extends AkairoClient {
     commandHandler: CommandHandler

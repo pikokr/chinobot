@@ -1,0 +1,5 @@
+{
+  "delay": 2000,
+  "ext": "ts,graphql",
+  "exec": "ts-node backend"
+}

@@ -12,6 +12,11 @@
         }
       }
     },
-    "addr": ""
+    "addr": "",
+    "oauth2": {
+      "clientID": "",
+      "clientSecret": "",
+      "callback": ""
+    }
   }
 }

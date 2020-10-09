@@ -1,6 +1,6 @@
 import {Command} from "discord-akairo";
 import {Message} from "discord.js";
-import config from '../../../../config.json'
+import config from '../../../config.json'
 
 export default class Help extends Command {
     constructor() {

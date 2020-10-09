@@ -1,17 +1,37 @@
 import express from 'express'
-import config from '../../config.json'
+import config from '../config.json'
 import http from 'http'
 import sio, {Namespace} from 'socket.io'
 import socket from './socket'
 import {ApolloServer} from "apollo-server-express";
 import schema from './graphql/schema'
+import cors from 'cors'
+import jwt from 'jsonwebtoken'
 
 global.namespaces = {}
 
 const app = express()
 
+app.use(cors())
+
 const apollo = new ApolloServer({
-    schema
+    schema,
+    context: ({req}) => {
+        if (!req.headers.Authorization || !(<string>req.headers.Authorization).startsWith('Bearer ')) {
+            return {
+                user: null
+            }
+        }
+        try {
+            return {
+                user: jwt.verify((req.headers.Authorization as string).slice('Bearer '.length), config.web.jwt)
+            }
+        } catch (e) {
+            return {
+                user: null
+            }
+        }
+    }
 })
 
 apollo.applyMiddleware({app, path: '/graphql'})

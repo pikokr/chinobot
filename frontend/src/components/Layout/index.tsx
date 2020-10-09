@@ -1,15 +1,34 @@
 import React, {Component} from 'react';
 import {Container, CssBaseline, Toolbar} from "@material-ui/core";
-import {Provider} from "react-redux";
-import {createStore} from 'redux'
-import reducers from '../../reducers'
 import Header from "./Header";
-const store = createStore(reducers)
+import connectReducers from "../../utils/connectReducers";
+import {graphql} from '../../utils/graphql'
+import {gql} from "@apollo/client";
 
-class Layout extends Component {
+class Layout extends Component<any> {
+    async componentDidMount() {
+        if (!this.props.user && localStorage.getItem('token')) {
+            const user = (await graphql(gql`
+            query {
+                me {
+                    user {
+                        id
+                        tag
+                        username
+                    }
+                }
+            }
+            `))
+            if (user && user.me) {
+                this.props.setUser(user.me)
+                console.log(user.me)
+            }
+        }
+    }
+
     render() {
         return (
-            <Provider store={store}>
+            <>
                 <CssBaseline/>
                 <Header/>
                 <Toolbar/>
@@ -20,9 +39,9 @@ class Layout extends Component {
                         {this.props.children}
                     </div>
                 </Container>
-            </Provider>
+            </>
         );
     }
 }
 
-export default Layout;
+export default connectReducers(Layout)
