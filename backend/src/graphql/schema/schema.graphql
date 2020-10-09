@@ -1,0 +1,12 @@
+type Query {
+    status: Status
+}
+
+type Shard {
+    id: Int
+    online: Boolean
+}
+
+type Status {
+    shards: [Shard]
+}

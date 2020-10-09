@@ -3,10 +3,18 @@ import config from '../../config.json'
 import http from 'http'
 import sio, {Namespace} from 'socket.io'
 import socket from './socket'
+import {ApolloServer} from "apollo-server-express";
+import schema from './graphql/schema'
 
 global.namespaces = {}
 
 const app = express()
+
+const apollo = new ApolloServer({
+    schema
+})
+
+apollo.applyMiddleware({app, path: '/graphql'})
 
 app.use(express.json())
 
