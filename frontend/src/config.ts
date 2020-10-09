@@ -1,0 +1,1 @@
+export const GRAPHQL_URL = 'http://test.pikodev.me:3060/graphql'
