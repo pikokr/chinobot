@@ -16,9 +16,9 @@ export default {
         },
         me: async (source, args, context) => {
             if (!context.user) return null
+
             return {
-                user: context.user.user,
-                guilds: context.user.guilds instanceof Array ? context.user.guilds : [] || []
+                user: context.user.user
             }
         }
     },
@@ -56,6 +56,37 @@ export default {
                 }
             })).json()
             return jwt.sign(result, config.web.jwt)
+        }
+    },
+    SelfUser: {
+        guilds: async (source, args, ctx) => {
+            const guilds = ctx.user.guilds
+
+            let results = guilds instanceof Array ? (await Promise.all(guilds.map(async (guild: any) => {
+                const fetched = (await Promise.all(Object.values(global.namespaces.bot!.sockets).map(socket => request(socket, 'guild', {
+                    id: guild.id
+                })))).find(r=>r)
+
+                const value = fetched ? fetched[0] : null
+
+                if (value) {
+                    guild.members = value.members.length
+                }
+
+                guild.bot = Boolean(value)
+
+                return guild
+            }))).filter(value => {
+                switch (args.type) {
+                    case 'ADMIN':
+                        return Boolean(value.permissions & 32)
+                    case 'USER':
+                    default:
+                        return true
+                }
+            }) : []
+
+            return results
         }
     }
 } as IResolvers

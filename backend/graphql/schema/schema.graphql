@@ -1,3 +1,8 @@
+enum GuildLoadType {
+    USER
+    ADMIN
+}
+
 type Query {
     status: Status
     me: SelfUser
@@ -18,11 +23,14 @@ type Guild {
     id: String
     icon: String
     members: Int
+    name: String
+    bot: Boolean
+    iconURL: String
 }
 
 type SelfUser {
     user: User
-    guilds: [Guild]
+    guilds(type: GuildLoadType!): [Guild]
 }
 
 type Shard {

@@ -21,8 +21,11 @@ class Layout extends Component<any> {
             }
             `))
             if (user && user.me) {
+                if (!user.me.user) {
+                    localStorage.removeItem('token')
+                    return
+                }
                 this.props.setUser(user.me)
-                console.log(user.me)
             }
         }
     }
