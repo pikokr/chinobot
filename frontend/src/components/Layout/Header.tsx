@@ -38,7 +38,7 @@ const Header = ({user}: any) => {
                                 <IconButton color="inherit" onClick={e => setUserPopup(e.currentTarget)}>
                                     <PersonIcon/>
                                 </IconButton>
-                                <UserPopup user={user} open={Boolean(userPopup)} anchorEl={userPopup} onClose={() => setUserPopup(null)}/>
+                                <UserPopup open={Boolean(userPopup)} anchorEl={userPopup} onClose={() => setUserPopup(null)}/>
                             </>
                         ) : <Button onClick={() => {
                             localStorage.redirect = window.location.pathname

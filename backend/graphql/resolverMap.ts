@@ -15,8 +15,10 @@ export default {
             return {shards}
         },
         me: async (source, args, context) => {
+            if (!context.user) return null
             return {
-                user: context.user
+                user: context.user.user,
+                guilds: context.user.guilds instanceof Array ? context.user.guilds : [] || []
             }
         }
     },
@@ -28,7 +30,7 @@ export default {
                 grant_type: 'authorization_code',
                 redirect_uri: config.web.oauth2.callback,
                 code: code,
-                scope: 'identify',
+                scope: 'identify guilds',
             };
             const res = (await fetch('https://discord.com/api/oauth2/token', {
                 method: 'POST',
@@ -41,13 +43,19 @@ export default {
             if (res.status !== 200) {
                 return null
             }
-            const user = await (await fetch('https://discord.com/api/users/@me', {
+            const result: any = {}
+            result.user = await (await fetch('https://discord.com/api/users/@me', {
                 headers: {
                     Authorization: `${json.token_type} ${json.access_token}`
                 }
             })).json()
-            user.tag = user.username + '#' + user.discriminator
-            return jwt.sign(user, config.web.jwt)
+            result.user.tag = result.user.username + '#' + result.user.discriminator
+            result.guilds = await (await fetch('https://discord.com/api/users/@me/guilds', {
+                headers: {
+                    Authorization: `${json.token_type} ${json.access_token}`
+                }
+            })).json()
+            return jwt.sign(result, config.web.jwt)
         }
     }
 } as IResolvers

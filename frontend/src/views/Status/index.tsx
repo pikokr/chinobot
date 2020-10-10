@@ -5,8 +5,10 @@ import {graphql} from "../../utils/graphql";
 import {gql} from "@apollo/client";
 import Layout from "../../components/Layout";
 
-class Status extends Component {
-    state = {
+class Status extends Component<any,any> {
+    state: {
+        shards: any
+    } = {
         shards: null
     }
 
@@ -41,9 +43,9 @@ class Status extends Component {
                     샤드 정보
                 </Typography>
                 {
-                    this.state.shards && (
+                    this.state.shards ? this.state.shards.length ? (
                         <ShardInfo data={this.state.shards}/>
-                    )
+                    ) : '샤드가 없습니다' : '로딩중...'
                 }
             </Layout>
         );
