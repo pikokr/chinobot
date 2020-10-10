@@ -4,7 +4,7 @@ import {graphql} from "../../utils/graphql";
 import {gql} from "@apollo/client";
 import {
     Avatar,
-    Card, CardActionArea, CardContent, CardHeader, CardMedia,
+    Card, CardActionArea, CardHeader,
     Grid,
     Typography
 } from "@material-ui/core";
