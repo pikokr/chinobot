@@ -38,7 +38,8 @@ class Layout extends Component<any> {
                 <Toolbar/>
                 <Container>
                     <div style={{
-                        paddingTop: 10
+                        paddingTop: 10,
+                        width: '100%'
                     }}>
                         {this.props.children}
                     </div>

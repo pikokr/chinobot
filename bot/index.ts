@@ -37,7 +37,6 @@ io.on('shards', async (data: any) => {
 })
 
 io.on('guild', async (data: any) => {
-    console.log(data)
     const res = (await Promise.all(manager.shards.filter(r=>r.ready).map(shard => shard.eval(`
     this.guilds.cache.get('${data.payload.id}')?.toJSON()
     `))))

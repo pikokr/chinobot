@@ -79,7 +79,7 @@ export default {
             }))).filter(value => {
                 switch (args.type) {
                     case 'ADMIN':
-                        return Boolean(value.permissions & 32)
+                        return Boolean(value.permissions & 8)
                     case 'USER':
                     default:
                         return true
