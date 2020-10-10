@@ -1,0 +1,45 @@
+enum GuildLoadType {
+    USER
+    ADMIN
+}
+
+type Query {
+    status: Status
+    me: SelfUser
+}
+
+type Mutation {
+    login(code: String!) : String
+}
+
+type User {
+    tag: String
+    id: String
+    username: String
+    avatar: String
+}
+
+type Guild {
+    id: String
+    icon: String
+    members: Int
+    name: String
+    bot: Boolean
+    iconURL: String
+}
+
+type SelfUser {
+    user: User
+    guilds(type: GuildLoadType!): [Guild]
+}
+
+type Shard {
+    id: Int
+    online: Boolean
+    guilds: Int
+    users: Int
+}
+
+type Status {
+    shards: [Shard]
+}
