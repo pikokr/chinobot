@@ -3,7 +3,8 @@ import Layout from "../../components/Layout";
 import {graphql} from "../../utils/graphql";
 import {gql} from "@apollo/client";
 import {
-    Card, CardActionArea, CardContent, CardMedia,
+    Avatar,
+    Card, CardActionArea, CardContent, CardHeader, CardMedia,
     Grid,
     Typography
 } from "@material-ui/core";
@@ -58,17 +59,20 @@ class Servers extends Component<any> {
                                 {
                                     this.state.guilds.map((guild: any, i: number) => {
                                         const Content = <CardActionArea component="div">
-                                            <CardMedia
+                                            {/*<CardMedia
                                                 image={guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : DefaultIcon}
                                                 title={guild.name} style={{
                                                 height: 0,
-                                                paddingTop: '100%',
+                                                paddingTop: '50%',
                                             }}/>
-                                            <CardContent>
+                                                <CardContent>
                                                 <Typography variant="h6">
-                                                    {guild.name}
+                                                {guild.name}
                                                 </Typography>
-                                            </CardContent>
+                                                </CardContent>*/}
+                                                <CardHeader avatar={
+                                                    <Avatar src={guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : DefaultIcon}/>
+                                                } title={guild.name}/>
                                         </CardActionArea>
                                         return (
                                         <Grid item xs={12} md={4} lg={3} component={motion.div} variants={{

@@ -43,6 +43,17 @@ io.on('guild', async (data: any) => {
     io.emit(data.event, res || null)
 })
 
+io.on('guilds', async (data: any) => {
+    const result: Array<any> = []
+    for (let i of data.payload.guilds) {
+        const res = (await Promise.all(manager.shards.filter(r=>r.ready).map(shard => shard.eval(`
+            this.guilds.cache.get('${i}')?.toJSON()
+        `)))).find(r=>r)
+        result.push(res)
+    }
+    io.emit(data.event, result || null)
+})
+
 io.on('connect', () => console.log('Connected to backend socket'))
 
 manager.spawn().then(() => {
