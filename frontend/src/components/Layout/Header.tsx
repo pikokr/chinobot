@@ -33,7 +33,7 @@ const Header = ({user, session: {loading}}: any) => {
                     </Typography>
                     <div style={{flexGrow:1}}/>
                     {
-                        loading ? '유저 정보 로드중' : user ? (
+                        loading ? 'Loading' : user ? (
                             <>
                                 <IconButton color="inherit" onClick={e => setUserPopup(e.currentTarget)}>
                                     <PersonIcon/>
