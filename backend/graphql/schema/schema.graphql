@@ -6,6 +6,17 @@ enum GuildLoadType {
 type Query {
     status: Status
     me: SelfUser
+    guild(id: String) : DashGuild
+}
+
+type DashGuild {
+    id: String
+    icon: String
+    members: Int
+    name: String
+    iconURL: String
+    roles: Int
+    channels: Int
 }
 
 type Mutation {

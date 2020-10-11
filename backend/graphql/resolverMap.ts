@@ -20,6 +20,21 @@ export default {
             return {
                 user: context.user.user
             }
+        },
+        guild: async (source, args, context) => {
+            if (!context.user.guilds.find((r: any)=>r.id === args.id) || ((context.user.guilds.find((r: any)=>r.id === args.id).permissions & 8) === 0)) {
+                return null
+            }
+            args.id.replace('"', '\\"')
+            const data = (await Promise.all(Object.values(global.namespaces.bot!.sockets).map(socket => request(socket, 'guild', {
+                id: args.id
+            })))).find(r=>r) || null
+            if (data) {
+                data.members = data.members.length
+                data.roles = data.roles.length
+                data.channels = data.channels.length
+            }
+            return data
         }
     },
     Mutation: {
