@@ -42,7 +42,7 @@ class Servers extends Component<any> {
         return (
             <Layout>
                 {
-                    this.props.user ? this.state.guilds ? this.state.guilds.length ? (
+                    this.props.session.loading ? '유저 정보 불러오는중....' : this.props.user ? this.state.guilds ? this.state.guilds.length ? (
                         (
                             <Grid container spacing={1} style={{
                                 width: '100%'

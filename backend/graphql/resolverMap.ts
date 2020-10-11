@@ -1,8 +1,22 @@
 import {IResolvers} from 'graphql-tools'
 import request from "../util/request";
-import fetch from 'node-fetch'
+import fetch, {Response} from 'node-fetch'
 import config from '../../config.json'
 import jwt from 'jsonwebtoken'
+
+const req = (...data: [
+    RequestInfo,
+    RequestInit?
+]) : Promise<Response> => new Promise(async resolve => {
+    // @ts-ignore
+    await fetch(...data).then(async result => {
+        if (result.status === 429) {
+            const json = await result.json()
+            return resolve(new Promise(r2=>setTimeout(r2, json.retry_after)).then(() => req(...data)))
+        }
+        return resolve(result)
+    })
+})
 
 export default {
     Query: {
@@ -16,13 +30,24 @@ export default {
         },
         me: async (source, args, context) => {
             if (!context.user) return null
+            context.user.guilds = await (await req('https://discord.com/api/users/@me/guilds', {
+                headers: {
+                    Authorization: `Bearer ${context.user.accessToken}`
+                }
+            })).json()
 
             return {
                 user: context.user.user
             }
         },
         guild: async (source, args, context) => {
-            if (!context.user.guilds.find((r: any)=>r.id === args.id) || ((context.user.guilds.find((r: any)=>r.id === args.id).permissions & 8) === 0)) {
+            if (!context.user) return null
+            const guilds = await (await req('https://discord.com/api/users/@me/guilds', {
+                headers: {
+                    Authorization: `Bearer ${args.user.accessToken}`
+                }
+            })).json()
+            if (!guilds.find((r: any)=>r.id === args.id) || ((context.user.guilds.find((r: any)=>r.id === args.id).permissions & 8) === 0)) {
                 return null
             }
             args.id.replace('"', '\\"')
@@ -65,11 +90,7 @@ export default {
                 }
             })).json()
             result.user.tag = result.user.username + '#' + result.user.discriminator
-            result.guilds = await (await fetch('https://discord.com/api/users/@me/guilds', {
-                headers: {
-                    Authorization: `${json.token_type} ${json.access_token}`
-                }
-            })).json()
+            result.accessToken = json.access_token
             return jwt.sign(result, config.web.jwt)
         }
     },

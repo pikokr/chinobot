@@ -12,7 +12,9 @@ global.namespaces = {}
 
 const app = express()
 
-app.use(cors())
+app.use(cors({
+    origin: '*'
+}))
 
 const apollo = new ApolloServer({
     schema,

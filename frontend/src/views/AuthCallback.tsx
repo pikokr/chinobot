@@ -19,6 +19,7 @@ class AuthCallback extends Component {
                 error: false
             })
             localStorage.redirect ? window.location.assign(localStorage.redirect) : window.location.assign('/')
+            delete localStorage.redirect
         }
         if (!code) {
             this.setState({
@@ -70,7 +71,10 @@ class AuthCallback extends Component {
                     }
                 </Typography>
                 {
-                    this.state.error && <Button onClick={() => localStorage.redirect ? window.location.assign(localStorage.redirect) : window.location.assign('/')}>돌아가기</Button>
+                    this.state.error && <Button onClick={() => {
+                        localStorage.redirect ? window.location.assign(localStorage.redirect) : window.location.assign('/')
+                        delete localStorage.redirect
+                    }}>돌아가기</Button>
                 }
             </Grid>
         );

@@ -26,7 +26,14 @@ class Layout extends Component<any> {
                     return
                 }
                 this.props.setUser(user.me)
+                this.props.updateSession({
+                    loading: false
+                })
             }
+        } else {
+            this.props.updateSession({
+                loading: false
+            })
         }
     }
 
