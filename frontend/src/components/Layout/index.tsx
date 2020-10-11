@@ -26,7 +26,14 @@ class Layout extends Component<any> {
                     return
                 }
                 this.props.setUser(user.me)
+                this.props.updateSession({
+                    loading: false
+                })
             }
+        } else {
+            this.props.updateSession({
+                loading: false
+            })
         }
     }
 
@@ -38,7 +45,8 @@ class Layout extends Component<any> {
                 <Toolbar/>
                 <Container>
                     <div style={{
-                        paddingTop: 10
+                        paddingTop: 10,
+                        width: '100%'
                     }}>
                         {this.props.children}
                     </div>

@@ -1,8 +1,22 @@
 import {IResolvers} from 'graphql-tools'
 import request from "../util/request";
-import fetch from 'node-fetch'
+import fetch, {Response} from 'node-fetch'
 import config from '../../config.json'
 import jwt from 'jsonwebtoken'
+
+const req = (...data: [
+    RequestInfo,
+    RequestInit?
+]) : Promise<Response> => new Promise(async resolve => {
+    // @ts-ignore
+    await fetch(...data).then(async result => {
+        if (result.status === 429) {
+            const json = await result.json()
+            return resolve(new Promise(r2=>setTimeout(r2, json.retry_after)).then(() => req(...data)))
+        }
+        return resolve(result)
+    })
+})
 
 export default {
     Query: {
@@ -16,10 +30,36 @@ export default {
         },
         me: async (source, args, context) => {
             if (!context.user) return null
+            context.user.guilds = await (await req('https://discord.com/api/users/@me/guilds', {
+                headers: {
+                    Authorization: `Bearer ${context.user.accessToken}`
+                }
+            })).json()
 
             return {
                 user: context.user.user
             }
+        },
+        guild: async (source, args, context) => {
+            if (!context.user) return null
+            const guilds = await (await req('https://discord.com/api/users/@me/guilds', {
+                headers: {
+                    Authorization: `Bearer ${context.user.accessToken}`
+                }
+            })).json()
+            if (!guilds.find((r: any)=>r.id === args.id) || ((context.user.guilds.find((r: any)=>r.id === args.id).permissions & 8) === 0)) {
+                return null
+            }
+            args.id.replace('"', '\\"')
+            const data = (await Promise.all(Object.values(global.namespaces.bot!.sockets).map(socket => request(socket, 'guild', {
+                id: args.id
+            })))).find(r=>r) || null
+            if (data) {
+                data.members = data.members.length
+                data.roles = data.roles.length
+                data.channels = data.channels.length
+            }
+            return data
         }
     },
     Mutation: {
@@ -50,11 +90,7 @@ export default {
                 }
             })).json()
             result.user.tag = result.user.username + '#' + result.user.discriminator
-            result.guilds = await (await fetch('https://discord.com/api/users/@me/guilds', {
-                headers: {
-                    Authorization: `${json.token_type} ${json.access_token}`
-                }
-            })).json()
+            result.accessToken = json.access_token
             return jwt.sign(result, config.web.jwt)
         }
     },
@@ -62,12 +98,20 @@ export default {
         guilds: async (source, args, ctx) => {
             const guilds = ctx.user.guilds
 
-            let results = guilds instanceof Array ? (await Promise.all(guilds.map(async (guild: any) => {
-                const fetched = (await Promise.all(Object.values(global.namespaces.bot!.sockets).map(socket => request(socket, 'guild', {
-                    id: guild.id
-                })))).find(r=>r)
+            const fetched0 = ((await Promise.all(Object.values(global.namespaces.bot!.sockets).map(socket => request(socket, 'guilds', {
+                guilds: guilds.map((r: any)=>r.id)
+            })))) || [])
 
-                const value = fetched ? fetched[0] : null
+            let fetched: any[] = []
+
+            for (const i of fetched0) {
+                fetched = [...fetched, ...i]
+            }
+
+            return guilds instanceof Array ? (guilds.map((guild: any) => {
+                const g = fetched.find((r: any)=>r?.id === guild.id)
+
+                const value = g ? g : null
 
                 if (value) {
                     guild.members = value.members.length
@@ -76,17 +120,15 @@ export default {
                 guild.bot = Boolean(value)
 
                 return guild
-            }))).filter(value => {
+            })).filter((guild: any) => {
                 switch (args.type) {
                     case 'ADMIN':
-                        return Boolean(value.permissions & 32)
+                        return Boolean(Number(guild.permissions) & 8)
                     case 'USER':
                     default:
                         return true
                 }
             }) : []
-
-            return results
         }
     }
 } as IResolvers

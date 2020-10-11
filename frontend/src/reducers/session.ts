@@ -2,7 +2,8 @@ import {UPDATE_SESSION} from "../actions/session";
 
 const initialState = {
     user: null,
-    loggedIn: false
+    loggedIn: false,
+    loading: true
 }
 
 const session = (state = initialState, action: any) => {

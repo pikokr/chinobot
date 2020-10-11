@@ -6,7 +6,7 @@ function getGqlString(doc: DocumentNode) {
 }
 
 export async function graphql(data: DocumentNode) {
-    return (await (await fetch(GRAPHQL_URL, {
+    const res = (await fetch(GRAPHQL_URL, {
         headers: {
             Authorization: (localStorage.getItem('token') && `Bearer ${localStorage.getItem('token')}`) || '',
             'Content-Type': 'application/json'
@@ -15,5 +15,8 @@ export async function graphql(data: DocumentNode) {
             query: getGqlString(data)
         }),
         method: 'POST'
-    })).json()).data
+    }))
+    const text = await res.text()
+    const json = JSON.parse(text)
+    return json.data
 }

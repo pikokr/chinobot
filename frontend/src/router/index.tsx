@@ -7,6 +7,7 @@ const Router = () => {
         <Switch>
             {
                 routes.map((route, i) => (
+                    // @ts-ignore
                     <Route key={i} {...route}/>
                 ))
             }

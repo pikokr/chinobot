@@ -13,7 +13,7 @@ const ShardInfo = ({data}: any) => {
                 {
                     chunk ?
                     chunk.map((shard: any, i: number) => (
-                        <Grid item xs={12} md={4}>
+                        <Grid item xs={12} md={4} key={i}>
                             <Accordion key={i} defaultExpanded>
                                 <AccordionSummary>
                                     샤드 #{shard.id}
