@@ -55,7 +55,7 @@ class Dashboard extends Component<any> {
                             유저에게 관리자 권한이 없음
                         </Typography>
                         <Typography>
-                            해당 서버를 핸들중인 샤드가 서버에 않음
+                            해당 서버를 핸들중인 샤드가 서버에 없음
                         </Typography>
                     </div> : '대시보드'
                 }
