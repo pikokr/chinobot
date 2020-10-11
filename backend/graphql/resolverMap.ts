@@ -12,6 +12,7 @@ const req = (...data: [
     await fetch(...data).then(async result => {
         if (result.status === 429) {
             const json = await result.json()
+            console.log(json)
             return resolve(new Promise(r2=>setTimeout(r2, json.retry_after)).then(() => req(...data)))
         }
         return resolve(result)
@@ -47,13 +48,13 @@ export default {
                     Authorization: `Bearer ${context.user.accessToken}`
                 }
             })).json()
-            if (!guilds.find((r: any)=>r.id === args.id) || ((context.user.guilds.find((r: any)=>r.id === args.id).permissions & 8) === 0)) {
+            if (!guilds.find((r: any)=>r.id === args.id) || ((guilds.find((r: any)=>r.id === args.id).permissions & 8) === 0)) {
                 return null
             }
             args.id.replace('"', '\\"')
             const data = (await Promise.all(Object.values(global.namespaces.bot!.sockets).map(socket => request(socket, 'guild', {
                 id: args.id
-            })))).find(r=>r) || null
+            })))).find(r=>r)
             if (data) {
                 data.members = data.members.length
                 data.roles = data.roles.length
