@@ -3,66 +3,10 @@ import request from "../util/request";
 import fetch, {Response} from 'node-fetch'
 import config from '../../config.json'
 import jwt from 'jsonwebtoken'
-
-const req = (...data: [
-    RequestInfo,
-    RequestInit?
-]) : Promise<Response> => new Promise(async resolve => {
-    // @ts-ignore
-    await fetch(...data).then(async result => {
-        if (result.status === 429) {
-            const json = await result.json()
-            console.log(json)
-            return resolve(new Promise(r2=>setTimeout(r2, json.retry_after)).then(() => req(...data)))
-        }
-        return resolve(result)
-    })
-})
+import Query from "./resolvers/Query";
 
 export default {
-    Query: {
-        status: async () => {
-            const sockets = Object.values(global.namespaces.bot!.sockets)
-            const shards: any[] = []
-            for (let socket of sockets) {
-                (await request(socket,'shards')).forEach((i:any)=>shards.push(i))
-            }
-            return {shards}
-        },
-        me: async (source, args, context) => {
-            if (!context.user) return null
-            context.user.guilds = await (await req('https://discord.com/api/users/@me/guilds', {
-                headers: {
-                    Authorization: `Bearer ${context.user.accessToken}`
-                }
-            })).json()
-
-            return {
-                user: context.user.user
-            }
-        },
-        guild: async (source, args, context) => {
-            if (!context.user) return null
-            const guilds = await (await req('https://discord.com/api/users/@me/guilds', {
-                headers: {
-                    Authorization: `Bearer ${context.user.accessToken}`
-                }
-            })).json()
-            if (!guilds.find((r: any)=>r.id === args.id) || ((guilds.find((r: any)=>r.id === args.id).permissions & 8) === 0)) {
-                return null
-            }
-            args.id.replace('"', '\\"')
-            const data = (await Promise.all(Object.values(global.namespaces.bot!.sockets).map(socket => request(socket, 'guild', {
-                id: args.id
-            })))).find(r=>r)
-            if (data) {
-                data.members = data.members.length
-                data.roles = data.roles.length
-                data.channels = data.channels.length
-            }
-            return data
-        }
-    },
+    Query,
     Mutation: {
         login: async (source, {code}) => {
             const data = {
