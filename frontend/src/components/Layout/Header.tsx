@@ -7,7 +7,7 @@ import {Menu as MenuIcon, Person as PersonIcon} from "@material-ui/icons";
 import {LOGIN_URL} from "../../config";
 import UserPopup from "./UserPopup";
 
-const Header = ({user}: any) => {
+const Header = ({user, session: {loading}}: any) => {
     const [sidebar, setSidebar] = React.useState(false)
     const [userPopup, setUserPopup]: any = React.useState(null)
 
@@ -33,7 +33,7 @@ const Header = ({user}: any) => {
                     </Typography>
                     <div style={{flexGrow:1}}/>
                     {
-                        user ? (
+                        loading ? '유저 정보 로드중' : user ? (
                             <>
                                 <IconButton color="inherit" onClick={e => setUserPopup(e.currentTarget)}>
                                     <PersonIcon/>

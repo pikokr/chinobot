@@ -44,7 +44,7 @@ export default {
             if (!context.user) return null
             const guilds = await (await req('https://discord.com/api/users/@me/guilds', {
                 headers: {
-                    Authorization: `Bearer ${args.user.accessToken}`
+                    Authorization: `Bearer ${context.user.accessToken}`
                 }
             })).json()
             if (!guilds.find((r: any)=>r.id === args.id) || ((context.user.guilds.find((r: any)=>r.id === args.id).permissions & 8) === 0)) {
