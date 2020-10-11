@@ -5,7 +5,7 @@ import Guild from '../../../models/Guild'
 
 export default class Clear extends Command {
     constructor() {
-        super('경고', {
+        super('warn', {
             aliases: ['경고'],
             category: 'moderator',
             clientPermissions: ['ADMINISTRATOR'],

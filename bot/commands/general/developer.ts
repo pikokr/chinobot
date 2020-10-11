@@ -4,7 +4,7 @@ import config from '../../../config.json'
 
 export default class Help extends Command {
     constructor() {
-        super('개발자', {
+        super('developer', {
             aliases: ['개발자'],
             description: '개발자 목록',
             category: 'general'

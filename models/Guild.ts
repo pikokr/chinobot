@@ -10,11 +10,11 @@ const schema = new mongoose.Schema({
     warnStack: {type: Number, required: true, default: 0}
 })
 
-let warn: mongoose.Model<Guild>
+let guild: mongoose.Model<Guild>
 
 try {
-    warn = mongoose.model('guild')
+    guild = mongoose.model('guild')
 } catch (e) {
-    warn = mongoose.model('guild', schema)
+    guild = mongoose.model('guild', schema)
 }
-export default warn
+export default guild

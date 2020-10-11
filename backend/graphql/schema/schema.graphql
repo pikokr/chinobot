@@ -3,6 +3,12 @@ enum GuildLoadType {
     ADMIN
 }
 
+enum Command {
+    dashboard
+    help
+    dev
+}
+
 type Query {
     status: Status
     me: SelfUser
@@ -21,6 +27,8 @@ type DashGuild {
 
 type Mutation {
     login(code: String!) : String
+    enable(guild: String!, command: Command!) : Boolean
+    disable(guild: String!, command: Command!) : Boolean
 }
 
 type User {
