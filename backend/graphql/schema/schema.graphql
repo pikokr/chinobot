@@ -23,12 +23,12 @@ type DashGuild {
     iconURL: String
     roles: Int
     channels: Int
+    enable(command: Command!) : [String]
+    disable(command: Command!) : [String]
 }
 
 type Mutation {
     login(code: String!) : String
-    enable(guild: String!, command: Command!) : Boolean
-    disable(guild: String!, command: Command!) : Boolean
 }
 
 type User {
