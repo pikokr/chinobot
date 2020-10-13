@@ -7,6 +7,7 @@ import {ApolloServer} from "apollo-server-express";
 import schema from './graphql/schema'
 import cors from 'cors'
 import jwt from 'jsonwebtoken'
+import {connect} from "mongoose";
 
 global.namespaces = {}
 
@@ -49,7 +50,12 @@ const io = sio(server)
 
 socket(app,io)
 
-server.listen(config.web.port, () => console.log(`Listening on port ${config.web.port}`))
+connect(config.database, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    server.listen(config.web.port, () => console.log(`Listening on port ${config.web.port}`))
+})
 
 declare global {
     namespace NodeJS {

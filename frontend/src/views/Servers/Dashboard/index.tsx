@@ -3,6 +3,7 @@ import Layout from "../../../components/Layout";
 import {graphql} from "../../../utils/graphql";
 import {gql} from "@apollo/client";
 import {Typography} from "@material-ui/core";
+import GuildContainer from "../../../components/GuildContainer";
 
 class Dashboard extends Component<any> {
     state: {
@@ -16,10 +17,8 @@ class Dashboard extends Component<any> {
             query {
                 guild(id: "${this.props.match.params.id.replace('"', '\\"')}") {
                     icon
-                    channels
-                    icon
+                    id
                     name
-                    roles
                 }
             }
         `)
@@ -57,7 +56,11 @@ class Dashboard extends Component<any> {
                         <Typography>
                             해당 서버를 핸들중인 샤드가 서버에 없음
                         </Typography>
-                    </div> : '대시보드'
+                    </div> : (
+                        <GuildContainer guild={guild}>
+                            테스트
+                        </GuildContainer>
+                    )
                 }
             </Layout>
         );

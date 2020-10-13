@@ -3,7 +3,7 @@ import {Message, TextChannel} from "discord.js";
 
 export default class Clear extends Command {
     constructor() {
-        super('청소', {
+        super('clear', {
             aliases: ['청소', 'clear'],
             category: 'moderator',
             clientPermissions: ['MANAGE_MESSAGES'],

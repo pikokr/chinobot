@@ -4,7 +4,7 @@ import Guild from '../../../models/Guild'
 
 export default class Clear extends Command {
     constructor() {
-        super('경고스택설정', {
+        super('warnstack', {
             aliases: ['경고스택설정'],
             category: 'moderator',
             clientPermissions: ['ADMINISTRATOR'],

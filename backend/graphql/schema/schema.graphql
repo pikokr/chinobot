@@ -3,6 +3,12 @@ enum GuildLoadType {
     ADMIN
 }
 
+enum Command {
+    dashboard
+    help
+    dev
+}
+
 type Query {
     status: Status
     me: SelfUser
@@ -17,6 +23,8 @@ type DashGuild {
     iconURL: String
     roles: Int
     channels: Int
+    enable(command: Command!) : [String]
+    disable(command: Command!) : [String]
 }
 
 type Mutation {

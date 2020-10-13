@@ -3,7 +3,7 @@ import {GuildMember, Message} from "discord.js";
 
 export default class Clear extends Command {
     constructor() {
-        super('차단', {
+        super('ban', {
             aliases: ['차단', 'ban', '밴'],
             category: 'moderator',
             clientPermissions: ['BAN_MEMBERS'],

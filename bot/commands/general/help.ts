@@ -3,7 +3,7 @@ import {Message} from "discord.js";
 
 export default class Help extends Command {
     constructor() {
-        super('도움말', {
+        super('help', {
             aliases: ['도움말', 'help'],
             description: '도움말입니다',
             category: 'general'
@@ -14,7 +14,7 @@ export default class Help extends Command {
         embed.setTitle(this.client.user?.username + ' 도움말')
         const categories = this.client.commandHandler.categories.array()
         categories.forEach(category => {
-            embed.addField(category.id, category.array().map(r=>'`'+r.id+'`').join(' '))
+            embed.addField(category.id, category.array().map(r=>'`'+r.aliases[0]+'`').join(' '))
         })
         await msg.util?.send(embed)
     }
