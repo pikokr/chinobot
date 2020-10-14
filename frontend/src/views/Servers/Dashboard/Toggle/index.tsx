@@ -1,10 +1,16 @@
 import React, {Component} from 'react';
-import Layout from "../../../components/Layout";
-import {graphql} from "../../../utils/graphql";
+import Layout from "../../../../components/Layout";
+import {graphql} from "../../../../utils/graphql";
 import {gql} from "@apollo/client";
-import GuildContainer from "../../../components/GuildContainer";
+import GuildContainer from "../../../../components/GuildContainer";
 
-class Dashboard extends Component<any> {
+const categories = [
+    {
+        name: '기본'
+    }
+]
+
+class Toggle extends Component<any> {
     state: {
         guild: any
     } = {
@@ -38,11 +44,11 @@ class Dashboard extends Component<any> {
         return (
             <Layout>
                 <GuildContainer guild={guild}>
-                    ㅘ
+                    TOGGLE
                 </GuildContainer>
             </Layout>
         );
     }
 }
 
-export default Dashboard;
+export default Toggle;
