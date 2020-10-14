@@ -25,6 +25,7 @@ type DashGuild {
     channels: Int
     enable(command: Command!) : [String]
     disable(command: Command!) : [String]
+    disabled: [String]
 }
 
 type Mutation {

@@ -2,21 +2,26 @@ import {IResolvers} from 'graphql-tools'
 import Guild from "../../../models/Guild";
 
 export default {
-    enable: async (source, args, context, info) => {
+    disable: async (source, args, context, info) => {
         const guild = (await Guild.findOne({id: source.id}))!
-        if (guild.disabledCommands.includes(args.command)) return false
+        if (guild.disabledCommands.includes(args.command)) return guild.disabledCommands
         await Guild.updateOne({id: guild.id}, {
             $push: {
                 disabledCommands: args.command
             }
         })
-        return true
+        return guild.disabledCommands
     },
-    disable: async (source, args, context, info) => {
+    enable: async (source, args, context, info) => {
         const guild = (await Guild.findOne({id: source.id}))!
         if (!guild.disabledCommands.includes(args.command)) return guild.disabledCommands
         guild.disabledCommands = guild.disabledCommands.filter(r=>r !== args.command)
         await guild.save()
         return guild.disabledCommands
+    },
+    disabled: async (source, args, context, info) => {
+        const data = await Guild.findOne({id: source.id})
+        if (!data) return []
+        return data.disabledCommands
     }
 } as IResolvers
