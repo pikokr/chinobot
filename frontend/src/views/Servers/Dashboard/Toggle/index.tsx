@@ -3,10 +3,19 @@ import Layout from "../../../../components/Layout";
 import {graphql} from "../../../../utils/graphql";
 import {gql} from "@apollo/client";
 import GuildContainer from "../../../../components/GuildContainer";
+import {Card, CardContent, CardHeader, DialogContent, Grid, Switch, Typography} from "@material-ui/core";
+import {QuestionAnswer} from "@material-ui/icons";
 
 const categories = [
     {
-        name: '기본'
+        name: '기본',
+        items: [
+            {
+                name: '도움말',
+                code: 'help',
+                icon: QuestionAnswer
+            }
+        ]
     }
 ]
 
@@ -44,7 +53,28 @@ class Toggle extends Component<any> {
         return (
             <Layout>
                 <GuildContainer guild={guild}>
-                    TOGGLE
+                    {
+                        categories.map((category, i) => (
+                            <div key={i}>
+                                <Typography variant="h5">
+                                    {category.name}
+                                    <Grid container spacing={2}>
+                                        {
+                                            category.items.map((item,idx) => (
+                                                <Grid item xs={12} md={4}>
+                                                    <Card key={idx} variant="outlined">
+                                                        <CardHeader title={item.name} avatar={<item.icon/>} action={
+                                                            <Switch/>
+                                                        }/>
+                                                    </Card>
+                                                </Grid>
+                                            ))
+                                        }
+                                    </Grid>
+                                </Typography>
+                            </div>
+                        ))
+                    }
                 </GuildContainer>
             </Layout>
         );
