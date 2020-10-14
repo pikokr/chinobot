@@ -3,7 +3,7 @@ import Layout from "../../../../components/Layout";
 import {graphql} from "../../../../utils/graphql";
 import {gql} from "@apollo/client";
 import GuildContainer from "../../../../components/GuildContainer";
-import {Card, CardContent, CardHeader, DialogContent, Grid, Switch, Typography} from "@material-ui/core";
+import {Card, CardHeader, Grid, Switch, Typography} from "@material-ui/core";
 import {QuestionAnswer} from "@material-ui/icons";
 
 const categories = [
