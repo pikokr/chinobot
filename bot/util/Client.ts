@@ -1,6 +1,7 @@
 import {AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler} from "discord-akairo";
 import path from "path";
 import config from '../../config.json'
+import Music from "./music";
 
 export default class Client extends AkairoClient {
     commandHandler: CommandHandler
@@ -8,6 +9,8 @@ export default class Client extends AkairoClient {
     listenerHandler: ListenerHandler
 
     inhibitorHandler: InhibitorHandler
+
+    music: Music
 
     constructor() {
         super({
@@ -22,6 +25,8 @@ export default class Client extends AkairoClient {
                 }
             }
         })
+
+        this.music = new Music(this, config.lavalink, {})
 
         this.on('debug', console.debug)
         this.on('error', console.error)

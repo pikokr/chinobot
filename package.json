@@ -26,6 +26,7 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "mongoose": "^5.10.8",
+    "shoukaku": "^1.5.2",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.1"
   }

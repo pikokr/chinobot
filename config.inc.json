@@ -18,5 +18,13 @@
       "clientSecret": "",
       "callback": ""
     }
-  }
+  },
+  "lavalink": [
+    {
+      "host": "localhost",
+      "port": 2333,
+      "auth": "youshallnotpass",
+      "name": "Local-1"
+    }
+  ]
 }

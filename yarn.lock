@@ -2811,7 +2811,7 @@ no-case@^3.0.3:
     lower-case "^2.0.1"
     tslib "^1.10.0"
 
-node-fetch@2.6.1, node-fetch@^2.1.2, node-fetch@^2.2.0, node-fetch@^2.6.0:
+node-fetch@2.6.1, node-fetch@^2.1.2, node-fetch@^2.2.0, node-fetch@^2.6.0, node-fetch@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
@@ -3253,6 +3253,15 @@ sha.js@^2.4.11:
   dependencies:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
+
+shoukaku@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/shoukaku/-/shoukaku-1.5.2.tgz#797576ebf40a4979fedf9ff2dd46e712034bde80"
+  integrity sha512-sRb6j78RHVfdy96/DdhBA1emZWdPnFH2+5JZ9t3TThjMvfiBa/AaMJMyVBpYH8svI+xOZnXEsfQyqN9BJ15oqA==
+  dependencies:
+    abort-controller "^3.0.0"
+    node-fetch "^2.6.1"
+    ws "^7.3.1"
 
 sift@7.0.1:
   version "7.0.1"
