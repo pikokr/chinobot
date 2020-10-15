@@ -14,7 +14,7 @@ import {
     Switch,
     Typography
 } from "@material-ui/core";
-import {QuestionAnswer} from "@material-ui/icons";
+import {Info, QuestionAnswer} from "@material-ui/icons";
 
 const categories = [
     {
@@ -24,6 +24,16 @@ const categories = [
                 name: '도움말',
                 code: 'help',
                 icon: QuestionAnswer
+            }
+        ]
+    },
+    {
+        name: '정보',
+        items: [
+            {
+                name: '서버 정보',
+                code: 'guild_info',
+                icon: Info
             }
         ]
     }

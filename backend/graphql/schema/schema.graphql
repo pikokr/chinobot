@@ -4,9 +4,8 @@ enum GuildLoadType {
 }
 
 enum Command {
-    dashboard
     help
-    dev
+    guild_info
 }
 
 type Query {
