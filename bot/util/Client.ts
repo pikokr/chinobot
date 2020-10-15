@@ -1,4 +1,4 @@
-import {AkairoClient, CommandHandler, ListenerHandler} from "discord-akairo";
+import {AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler} from "discord-akairo";
 import path from "path";
 import config from '../../config.json'
 
@@ -6,6 +6,8 @@ export default class Client extends AkairoClient {
     commandHandler: CommandHandler
 
     listenerHandler: ListenerHandler
+
+    inhibitorHandler: InhibitorHandler
 
     constructor() {
         super({
@@ -34,11 +36,17 @@ export default class Client extends AkairoClient {
         this.listenerHandler = new ListenerHandler(this, {
             directory: path.resolve(path.join(__dirname,'..','listeners'))
         })
+        this.inhibitorHandler = new InhibitorHandler(this, {
+            directory: path.resolve(path.join(__dirname,'..','inhibitors'))
+        })
         this.listenerHandler.setEmitters({
             commandHandler: this.commandHandler,
-            listenerHandler: this.listenerHandler
+            listenerHandler: this.listenerHandler,
+            inhibitorHandler: this.inhibitorHandler
         })
+        this.commandHandler.useInhibitorHandler(this.inhibitorHandler)
         this.commandHandler.loadAll()
         this.listenerHandler.loadAll()
+        this.inhibitorHandler.loadAll()
     }
 }
