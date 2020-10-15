@@ -5,11 +5,8 @@ export default {
     disable: async (source, args, context, info) => {
         const guild = (await Guild.findOne({id: source.id}))!
         if (guild.disabledCommands.includes(args.command)) return guild.disabledCommands
-        await Guild.updateOne({id: guild.id}, {
-            $push: {
-                disabledCommands: args.command
-            }
-        })
+        guild.disabledCommands.push(args.command)
+        await guild.save()
         return guild.disabledCommands
     },
     enable: async (source, args, context, info) => {
