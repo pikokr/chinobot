@@ -50,6 +50,14 @@ export default class Help extends Command {
             await msg.util!.send(msg.embed().setTitle('곡 추가').addField('제목', t.title, true).addField('길이', formatTime(t.duration), true).setImage(t.displayThumbnail('maxresdefault')))
             track = t
             shouldPlay = true
+        } else if (res.loadType === 'LOAD_FAILED') {
+            return msg.util!.send(msg.embed().setTitle('곡 로딩 실패..').setDescription(`\`\`\`js\n${res.exception?.message}\`\`\``).setFooter(''))
+        } else if (res.loadType === 'PLAYLIST_LOADED') {
+            shouldPlay = true
+            track = res.tracks
+            const tracks = res.tracks
+            const list = res.playlist!
+            await msg.util!.send(msg.embed().setTitle('플레이리스트 추가').addField('플레이리스트 제목', list.name, true).addField('길이', formatTime(list.duration), true))
         }
 
         if (!shouldPlay) return
