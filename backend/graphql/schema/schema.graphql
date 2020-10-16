@@ -6,6 +6,9 @@ enum GuildLoadType {
 enum Command {
     help
     guild_info
+    play
+    stop
+    skip
 }
 
 type Query {

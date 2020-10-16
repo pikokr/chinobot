@@ -6,15 +6,15 @@ import GuildContainer from "../../../../components/GuildContainer";
 import {
     Button,
     Card,
-    CardHeader, CircularProgress,
+    CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
-    Grid,
+    Grid, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText,
     Switch,
     Typography
 } from "@material-ui/core";
-import {Info, QuestionAnswer} from "@material-ui/icons";
+import {Info, PlayArrow, QuestionAnswer, SkipNext, Stop} from "@material-ui/icons";
 
 const categories = [
     {
@@ -36,13 +36,33 @@ const categories = [
                 icon: Info
             }
         ]
+    },
+    {
+        name: '음악',
+        items: [
+            {
+                name: '재생',
+                icon: PlayArrow,
+                code: 'play'
+            },
+            {
+                name: '정지',
+                icon: Stop,
+                code: 'play'
+            },
+            {
+                name: '스킵',
+                icon: SkipNext,
+                code: 'play'
+            },
+        ]
     }
 ]
 
 class Toggle extends Component<any> {
     state: {
         guild: any
-        disables:string[],
+        disables: string[],
         loading: boolean
     } = {
         guild: null,
@@ -98,37 +118,53 @@ class Toggle extends Component<any> {
                                     {category.name}
                                     <Grid container spacing={2}>
                                         {
-                                            category.items.map((item,idx) => (
+                                            category.items.map((item, idx) => (
                                                 <Grid item xs={12} md={4} key={idx}>
                                                     <Card variant="outlined">
-                                                        <CardHeader title={item.name} avatar={<item.icon/>} action={
-                                                            <Switch checked={!this.state.disables.includes(item.code)} onChange={async (event, checked) => {
-                                                                this.setState(
-                                                                    {
-                                                                        loading: true
-                                                                    }
-                                                                )
-                                                                if (this.state.disables.includes(item.code)) {
-                                                                    const data = await graphql(gql`
+                                                        <List>
+                                                            <ListItem>
+                                                                <ListItemIcon>
+                                                                    <item.icon/>
+                                                                </ListItemIcon>
+                                                                <ListItemText primary={item.name}/>
+                                                                <ListItemSecondaryAction>
+                                                                    <Switch
+                                                                        checked={!this.state.disables.includes(item.code)}
+                                                                        onChange={async (event, checked) => {
+                                                                            this.setState(
+                                                                                {
+                                                                                    loading: true
+                                                                                }
+                                                                            )
+                                                                            if (this.state.disables.includes(item.code)) {
+                                                                                const data = await graphql(gql`
                                                                         query {
                                                                             guild(id: "${this.props.match.params.id.replace('"', '\\"')}") {
                                                                                 enable(command: ${item.code})
                                                                             }
                                                                         }
                                                                     `)
-                                                                    this.setState({disables: data.guild.enable, loading: false})
-                                                                } else {
-                                                                    const data = await graphql(gql`
+                                                                                this.setState({
+                                                                                    disables: data.guild.enable,
+                                                                                    loading: false
+                                                                                })
+                                                                            } else {
+                                                                                const data = await graphql(gql`
                                                                         query {
                                                                             guild(id: "${this.props.match.params.id.replace('"', '\\"')}") {
                                                                                 disable(command: ${item.code})
                                                                             }
                                                                         }
                                                                     `)
-                                                                    this.setState({disables: data.guild.disable, loading: false})
-                                                                }
-                                                            }}/>
-                                                        }/>
+                                                                                this.setState({
+                                                                                    disables: data.guild.disable,
+                                                                                    loading: false
+                                                                                })
+                                                                            }
+                                                                        }}/>
+                                                                </ListItemSecondaryAction>
+                                                            </ListItem>
+                                                        </List>
                                                     </Card>
                                                 </Grid>
                                             ))

@@ -11,7 +11,7 @@ import {connect} from "mongoose";
 
 global.namespaces = {}
 
-global.requestQueue = new Map<string, () => void>()
+global.requestQueue = new Map()
 
 const app = express()
 
@@ -65,7 +65,7 @@ declare global {
             namespaces: {
                 bot?: Namespace
             }
-            requestQueue: Map<string, ()=>void>
+            requestQueue: Map<string, (data: any)=>void>
         }
     }
 }
