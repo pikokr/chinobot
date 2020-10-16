@@ -1,5 +1,9 @@
 {
   "delay": 2000,
   "ext": "ts,graphql",
-  "exec": "ts-node backend"
+  "exec": "ts-node backend",
+  "ignore": [
+    "frontend",
+    "bot"
+  ]
 }

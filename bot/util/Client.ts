@@ -26,12 +26,7 @@ export default class Client extends AkairoClient {
             }
         })
 
-        this.music = new Music(this, config.lavalink)
-
-        this.on('debug', console.debug)
-        this.on('error', console.error)
-        this.on('shardError', console.error)
-        this.on('warn', console.warn)
+        this.music = new Music(this)
 
         this.commandHandler = new CommandHandler(this, {
             directory: path.resolve(path.join(__dirname,'..','commands')),
