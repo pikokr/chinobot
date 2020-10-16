@@ -6,36 +6,33 @@ export default class Help extends Command {
         super('play', {
             aliases: ['재생'],
             description: '음악 재생하는 명령어',
-            category: 'info'
+            category: 'info',
+            args: [
+                {
+                    match: 'rest',
+                    id: 'query',
+                    type: 'string',
+                    default: null
+                }
+            ]
         });
     }
-    async exec(msg: Message) {
+    async exec(msg: Message, {query}: {query:string}) {
         if (!msg.member!.voice.channel) {
             return msg.util!.send(msg.embed().setTitle('음성 채널에 들어가주세요!').setFooter(''))
         }
-        let player = this.client.music.getPlayer(msg.guild!.id)
+        let player = this.client.music.players.get(msg.guild!.id)
 
         if (player) {
-            if (msg.member!.voice.channelID !== player.voiceConnection.voiceChannelID) {
+            if (msg.member!.voice.channelID !== player.voiceChannel) {
                 return msg.util!.reply(msg.embed().setFooter('').setTitle('음악을 재생중인 채널에 들어가주세요!'))
             }
         }
 
-        const node = this.client.music.getNode()
+        const res = await this.client.music.search(query)
 
-        const tracks = await node
+        console.log(`[MUSIC:SEARCH] User: ${msg.author.id} Guild: ${msg.guild!.id} Load Type: ${res.loadType} Query: ${query}`)
 
-        if (!player) {
-            player = await node.joinVoiceChannel({
-                guildID: msg.guild!.id,
-                deaf: true,
-                voiceChannelID: msg.member!.voice.channelID!
-            })
-        }
-        player.on('error', async err => {
-            await msg.channel.send(msg.embed().setTitle('곡 재생중 오류가 발생했습니다.').setDescription('```js\n' + err.message + '```').setFooter(''))
-        })
-        const events: any[] = ['end', 'closed', 'nodeDisconnect']
-        for (const event of events) player.on(event, player.disconnect);
+        console.log(res.loadType)
     }
 }

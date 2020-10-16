@@ -23,8 +23,7 @@
     {
       "host": "localhost",
       "port": 2333,
-      "auth": "youshallnotpass",
-      "name": "Local-1"
+      "password": "youshallnotpass"
     }
   ]
 }

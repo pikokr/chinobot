@@ -26,7 +26,7 @@ export default class Client extends AkairoClient {
             }
         })
 
-        this.music = new Music(this, config.lavalink, {})
+        this.music = new Music(this, config.lavalink)
 
         this.on('debug', console.debug)
         this.on('error', console.error)
