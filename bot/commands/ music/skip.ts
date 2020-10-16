@@ -25,6 +25,6 @@ export default class Help extends Command {
             }
         }
         player.stop()
-        return msg.util!.send(msg.embed().setFooter('').setTitle('재생중인 음악을 정지하고 대기열을 초기화했어요!'))
+        return msg.util!.send(msg.embed().setFooter('').setTitle('곡을 스킵했어요!'))
     }
 }
