@@ -31,7 +31,7 @@ export default class Help extends Command {
 
         if (player) {
             if (msg.member!.voice.channelID !== player.voiceChannel) {
-                return msg.util!.reply(msg.embed().setFooter('').setTitle('음악을 재생중인 채널에 들어가주세요!'))
+                return msg.util!.send(msg.embed().setFooter('').setTitle('음악을 재생중인 채널에 들어가주세요!'))
             }
         }
 
@@ -47,7 +47,7 @@ export default class Help extends Command {
             return msg.util!.send(msg.embed().setTitle('검색 결과가 없어요!').setFooter(''))
         } else if (res.loadType === 'TRACK_LOADED') {
             const t = res.tracks[0]
-            await msg.util!.send(msg.embed().setTitle('곡 추가').addField('제목', t.title, true).addField('길이', formatTime(t.duration), true).setImage(t.displayThumbnail('maxresdefault')))
+            await msg.util!.send(msg.embed().setTitle('곡 추가').addField('제목', t.title, true).addField('길이', t.isStream ? '실시간' : formatTime(t.duration), true).setImage(t.displayThumbnail('maxresdefault')))
             track = t
             shouldPlay = true
         } else if (res.loadType === 'LOAD_FAILED') {

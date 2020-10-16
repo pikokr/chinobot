@@ -5,7 +5,7 @@ class Home extends Component {
     render() {
         return (
             <Layout>
-                홈
+                준비중!
             </Layout>
         );
     }
