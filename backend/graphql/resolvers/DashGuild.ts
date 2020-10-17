@@ -1,5 +1,6 @@
 import {IResolvers} from 'graphql-tools'
 import Guild from "../../../models/Guild";
+import Warn from "../../../models/Warn";
 
 export default {
     disable: async (source, args, context, info) => {
@@ -39,5 +40,8 @@ export default {
         data.serverListEnabled = false
         await data.save()
         return data.serverListEnabled
+    },
+    warns: async source => {
+        return Warn.find({guild: source.id})
     }
 } as IResolvers

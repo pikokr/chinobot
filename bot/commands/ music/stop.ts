@@ -6,7 +6,7 @@ export default class Help extends Command {
         super('stop', {
             aliases: ['정지'],
             description: '음악 정지하는 명령어',
-            category: 'info'
+            category: 'music'
         });
     }
 

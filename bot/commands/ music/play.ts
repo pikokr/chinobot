@@ -7,7 +7,7 @@ export default class Help extends Command {
         super('play', {
             aliases: ['재생'],
             description: '음악 재생하는 명령어',
-            category: 'info',
+            category: 'music',
             args: [
                 {
                     match: 'rest',

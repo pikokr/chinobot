@@ -6,5 +6,8 @@
     "frontend",
     "bot"
   ],
-  "signal": "SIGINT"
+  "signal": "SIGINT",
+  "events": {
+    "restart": "fuser -kn tcp 3060"
+  }
 }

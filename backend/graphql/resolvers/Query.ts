@@ -46,7 +46,7 @@ export default {
         }
         return data
     },
-    listGuilds: async (source, {page=1}) => {
+    listGuilds: async (source, {page = 1}) => {
         const guilds = await Guild.find({serverListEnabled: true})
         const data: any[] = []
         for (let guild of guilds) {
@@ -54,6 +54,9 @@ export default {
                 id: guild.id
             })))).find(r => r)
             if (item) {
+                item.description = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid corporis delectus dolore doloremque exercitationem in ipsam ipsum itaque iure molestias natus nobis nulla provident, quod sit totam vero voluptas?
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid corporis delectus dolore doloremque exercitationem in ipsam ipsum itaque iure molestias natus nobis nulla provident, quod sit totam vero voluptas?
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid corporis delectus dolore doloremque exercitationem in ipsam ipsum itaque iure molestias natus nobis nulla provident, quod sit totam vero voluptas?`
                 item.members = item.members.length
                 item.roles = item.roles.length
                 item.channels = item.channels.length
@@ -71,13 +74,14 @@ export default {
                         })
                         return inv.url
                 }).catch(err=>({error: err.message}))
-                })()`)).find((r: string|undefined)=>r)
+                })()`)).find((r: string | undefined) => r)
+                item.brief = 'Lorem ipsum dolor sit amet'
                 if (!invite.error) item.invite = invite
                 data.push(item)
             }
         }
 
-        const pages = _.chunk(_.sortBy(data.filter(r=>r.invite), 'members').reverse(), 30)
+        const pages = _.chunk(_.sortBy(data.filter(r => r.invite), 'members').reverse(), 30)
 
         if (!pages.length) return {
             guilds: [],
@@ -85,8 +89,42 @@ export default {
         }
 
         return {
-            guilds: pages[page-1],
+            guilds: pages[page - 1],
             pages: pages.length
         }
+    },
+    listGuild: async (source, {id}) => {
+        const guild = await Guild.findOne({serverListEnabled: true, id})
+        if (!guild) return null
+        const item = (await Promise.all(Object.values(global.namespaces.bot!.sockets).map(socket => request(socket, 'guild', {
+            id: guild.id
+        })))).find(r => r)
+        if (item) {
+            item.brief = 'Lorem ipsum dolor sit amet'
+            item.description = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid corporis delectus dolore doloremque exercitationem in ipsam ipsum itaque iure molestias natus nobis nulla provident, quod sit totam vero voluptas?
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid corporis delectus dolore doloremque exercitationem in ipsam ipsum itaque iure molestias natus nobis nulla provident, quod sit totam vero voluptas?
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid corporis delectus dolore doloremque exercitationem in ipsam ipsum itaque iure molestias natus nobis nulla provident, quod sit totam vero voluptas?`
+            item.members = item.members.length
+            item.roles = item.roles.length
+            item.channels = item.channels.length
+            const invite = (await broadcastEval(`(() => {
+                const guild = this.guilds.cache.find(r=>r.id === '${item.id}')
+                if (!guild) return null
+                return guild.fetchInvites().then(async res => {
+                    let inv = res.find(r=>r.inviter.id === this.user.id)
+                    if (inv) return inv.url
+                        const ch = guild.systemChannel || guild.channels.cache.filter(r=>r.send).first()
+                        if (!ch) return null
+                        inv = await ch.createInvite({
+                            maxUses: 0,
+                            maxAge: 0
+                        })
+                        return inv.url
+                }).catch(err=>({error: err.message}))
+                })()`)).find((r: string | undefined) => r)
+            if (!invite.error) item.invite = invite
+            return item
+        }
+        return null
     }
 } as IResolvers

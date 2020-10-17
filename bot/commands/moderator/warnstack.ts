@@ -4,10 +4,9 @@ import Guild from '../../../models/Guild'
 
 export default class Clear extends Command {
     constructor() {
-        super('warnstack', {
+        super('warn_stack', {
             aliases: ['경고스택설정'],
             category: 'moderator',
-            clientPermissions: ['ADMINISTRATOR'],
             userPermissions: ['ADMINISTRATOR'],
             args: [
                 {
@@ -21,7 +20,7 @@ export default class Clear extends Command {
         });
     }
     async exec(msg: Message, {count}: {count:number}) {
-        await Guild.update({id: msg.guild!.id}, {$set: {
+        await Guild.updateOne({id: msg.guild!.id}, {$set: {
             warnStack: count
         }})
         if (count > 0) {

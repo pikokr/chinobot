@@ -1,33 +1,34 @@
 import {Command} from "discord-akairo";
-import {Message} from "discord.js";
-import Guild from '../../../models/Guild'
+import {GuildMember, Message} from "discord.js";
+import Warn from '../../../models/Warn'
+import pagination from "../../util/pagination";
+import config from '../../../config.json'
 
 export default class Clear extends Command {
     constructor() {
-        super('warnstack', {
-            aliases: ['경고스택설정'],
+        super('warn_list', {
+            aliases: ['경고보기'],
             category: 'moderator',
-            clientPermissions: ['ADMINISTRATOR'],
             userPermissions: ['ADMINISTRATOR'],
             args: [
                 {
-                    type: 'integer',
-                    id: 'count',
-                    prompt: {
-                        start: '경고 개수를 입력하세요'
-                    },
+                    type: 'member',
+                    id: 'member',
+                    default: null
                 }
             ]
         });
     }
-    async exec(msg: Message, {count}: {count:number}) {
-        await Guild.updateOne({id: msg.guild!.id}, {$set: {
-            warnStack: count
-        }})
-        if (count > 0) {
-            await msg.util?.send(`경고 자동 차단 스택이 ${count}번으로 설정되었어요! 경고를 ${count}번 받으면 자동으로 서버에서 차단당해요!`)
-        } else {
-            await msg.util?.send('경고 자동 차단 스택이 비활성화 되었어요!')
+    async exec(msg: Message, {member}: {member:GuildMember|null}) {
+        if (!member) {
+            const warns = (await Warn.find({guild: msg.guild!.id}))
+            const members = Array.from(new Set(warns.map(r=>r.member)))
+            // @ts-ignore
+            if (!await pagination(msg, async () => members.map(m=>`<@${m}>\n${warns.filter(r=>r.member === m).map(r=>`${r.reason}`)}${
+                msg.member!.hasPermission('ADMINISTRATOR') ? `\n[관리하기](${config.web.frontend}/servers/${msg.guild!.id}/warns)` : ''
+            }`), 1, msg.embed().setTitle('경고 목록 - 전체'))) {
+                await msg.util!.send('경고가 없어요!')
+            }
         }
     }
 }

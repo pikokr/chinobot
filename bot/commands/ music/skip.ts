@@ -6,7 +6,7 @@ export default class Help extends Command {
         super('skip', {
             aliases: ['스킵'],
             description: '곡 스킵하는 명령어',
-            category: 'info'
+            category: 'music'
         });
     }
 

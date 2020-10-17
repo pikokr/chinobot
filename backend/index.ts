@@ -69,8 +69,3 @@ declare global {
         }
     }
 }
-
-process.on('SIGINT', () => {
-    server.close()
-})
-

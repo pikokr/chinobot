@@ -4,12 +4,15 @@ enum GuildLoadType {
 }
 
 enum Command {
-    help
     guild_info
     developer
     play
     stop
     skip
+    warn
+    unwarn
+    warn_stack
+    warn_list
 }
 
 type Query {
@@ -18,7 +21,7 @@ type Query {
     guild(id: String) : DashGuild
     guilds: [Guild]
     listGuilds(page: Int) : GuildRankResult
-    listGuild(id: String) : ListGuild
+    listGuild(id: String!) : ListGuild
 }
 
 type GuildRankResult {
@@ -34,6 +37,8 @@ type ListGuild {
     background: String
     cardBackground: String
     invite: String
+    brief: String
+    description: String
 }
 
 type DashGuild {
@@ -50,10 +55,18 @@ type DashGuild {
     enableServerList : Boolean
     serverListEnabled: Boolean
     disableServerList : Boolean
+    warns: [Warn]
+}
+
+type Warn {
+    id: String
+    member: String
+    reason: String
 }
 
 type Mutation {
     login(code: String!) : String
+    invite(code: String!) : Boolean
 }
 
 type User {
