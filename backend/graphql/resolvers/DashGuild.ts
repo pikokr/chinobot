@@ -45,6 +45,6 @@ export default {
         return Warn.find({guild: source.id})
     },
     warn: async (source, {id}) => {
-        return Warn.find({guild: source.id, id})
+        return Warn.findOne({guild: source.id, id})
     }
 } as IResolvers

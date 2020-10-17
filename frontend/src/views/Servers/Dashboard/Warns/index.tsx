@@ -31,7 +31,6 @@ class Warns extends Component<any> {
                 }
             }
         `)
-        console.log(data)
         if (data.guild) {
             this.setState({
                 guild: data.guild,
@@ -79,14 +78,40 @@ class Warns extends Component<any> {
                         body: {
                             emptyDataSourceMessage: '경고가 없습니다',
                             addTooltip: '추가',
-                            deleteTooltip: '삭제'
+                            deleteTooltip: '삭제',
+                            editRow: {
+                                deleteText: '경고를 삭제할까요?',
+                                cancelTooltip: '취소',
+                                saveTooltip: '저장'
+                            }
                         }
                     }} isLoading={loading} title="경고 관리" editable={{
                         onRowDelete: async oldData => {
-                            const data = [...this.state.warns!]
-                            const idx = data.indexOf(oldData)
-                            if (idx !== -1) data.splice(idx,1)
-                            console.log(data)
+                            await graphql(gql`
+                                query {
+                                    guild(id: "${this.props.match.params.id.replace('"', '\\"')}") {
+                                        warn(id: "${oldData.id.replace('"', '\\"')}") {
+                                            delete
+                                        }
+                                    }
+                                }
+                            `)
+                            const data = await graphql(gql`
+                                query {
+                                    guild(id: "${this.props.match.params.id.replace('"', '\\"')}") {
+                                        warns {
+                                            id
+                                            member
+                                            reason
+                                        }
+                                    }
+                                }
+                            `)
+                            if (data.guild?.warns) {
+                                this.setState({
+                                    warns: data.guild.warns
+                                })
+                            }
                         }
                     }}/>
                 </GuildContainer>
