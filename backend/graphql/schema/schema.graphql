@@ -17,6 +17,23 @@ type Query {
     me: SelfUser
     guild(id: String) : DashGuild
     guilds: [Guild]
+    listGuilds(page: Int) : GuildRankResult
+    listGuild(id: String) : ListGuild
+}
+
+type GuildRankResult {
+    guilds: [ListGuild]
+    pages: Int
+}
+
+type ListGuild {
+    id: String
+    icon: String
+    name: String
+    members: Int
+    background: String
+    cardBackground: String
+    invite: String
 }
 
 type DashGuild {
@@ -30,6 +47,9 @@ type DashGuild {
     enable(command: Command!) : [String]
     disable(command: Command!) : [String]
     disabled: [String]
+    enableServerList : Boolean
+    serverListEnabled: Boolean
+    disableServerList : Boolean
 }
 
 type Mutation {

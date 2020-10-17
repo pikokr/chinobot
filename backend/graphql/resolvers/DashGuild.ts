@@ -20,5 +20,24 @@ export default {
         const data = await Guild.findOne({id: source.id})
         if (!data) return []
         return data.disabledCommands
+    },
+    serverListEnabled: async (source, args, context, info) => {
+        const data = await Guild.findOne({id: source.id})
+        if (!data) return false
+        return data.serverListEnabled
+    },
+    enableServerList: async (source, args, context, info) => {
+        const data = await Guild.findOne({id: source.id})
+        if (!data) return null
+        data.serverListEnabled = true
+        await data.save()
+        return data.serverListEnabled
+    },
+    disableServerList: async (source, args, context, info) => {
+        const data = await Guild.findOne({id: source.id})
+        if (!data) return null
+        data.serverListEnabled = false
+        await data.save()
+        return data.serverListEnabled
     }
 } as IResolvers

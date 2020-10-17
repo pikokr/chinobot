@@ -1,5 +1,8 @@
 import request from "../../util/request";
 import {req} from "../../util/rateLimit";
+import {IResolvers} from 'graphql-tools'
+import Guild from "../../../models/Guild";
+import _ from 'lodash'
 
 export default {
     status: async () => {
@@ -42,5 +45,27 @@ export default {
             data.channels = data.channels.length
         }
         return data
+    },
+    listGuilds: async (source, {page=1}) => {
+        const guilds = await Guild.find({serverListEnabled: true})
+        const data: any[] = []
+        for (let guild of guilds) {
+            const item = (await Promise.all(Object.values(global.namespaces.bot!.sockets).map(socket => request(socket, 'guild', {
+                id: guild.id
+            })))).find(r => r)
+            if (item) {
+                item.members = item.members.length
+                item.roles = item.roles.length
+                item.channels = item.channels.length
+                data.push(item)
+            }
+        }
+
+        const pages = _.chunk(_.sortBy(data, 'members'), 30)
+
+        return {
+            guilds: pages[page-1],
+            pages: pages.length
+        }
     }
-}
+} as IResolvers

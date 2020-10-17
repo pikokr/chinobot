@@ -3,7 +3,8 @@ import * as mongoose from 'mongoose'
 interface Guild extends mongoose.Document {
     id: string
     warnStack: number,
-    disabledCommands: string[]
+    disabledCommands: string[],
+    serverListEnabled: boolean
 }
 
 const schema = new mongoose.Schema({
@@ -13,6 +14,11 @@ const schema = new mongoose.Schema({
         type: Array,
         required: true,
         default: []
+    },
+    serverListEnabled: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 })
 
