@@ -14,7 +14,7 @@ import {
     Switch,
     Typography
 } from "@material-ui/core";
-import {Info, PlayArrow, QuestionAnswer, SkipNext, Stop} from "@material-ui/icons";
+import {Code, Info, PlayArrow, QuestionAnswer, SkipNext, Stop} from "@material-ui/icons";
 
 const categories = [
     {
@@ -24,6 +24,11 @@ const categories = [
                 name: '도움말',
                 code: 'help',
                 icon: QuestionAnswer
+            },
+            {
+                name: '개발자',
+                code: 'developer',
+                icon: Code
             }
         ]
     },

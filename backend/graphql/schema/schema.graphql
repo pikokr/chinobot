@@ -6,6 +6,7 @@ enum GuildLoadType {
 enum Command {
     help
     guild_info
+    developer
     play
     stop
     skip

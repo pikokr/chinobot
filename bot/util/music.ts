@@ -2,7 +2,7 @@ import {Manager} from "erela.js";
 import Client from "./Client";
 import {Payload} from "erela.js/structures/Manager";
 import config from '../../config.json'
-import {MessageEmbed, TextChannel, VoiceChannel} from "discord.js";
+import {Collection, MessageEmbed, TextChannel, VoiceChannel} from "discord.js";
 
 export default class Music extends Manager {
     constructor(client: Client) {
@@ -14,6 +14,8 @@ export default class Music extends Manager {
             }
         })
 
+        const players = new Collection<string, string>()
+
         client.on('raw', args => {
             this.updateVoiceState(args)
         })
@@ -23,16 +25,20 @@ export default class Music extends Manager {
         this.on('nodeConnect', node => console.log(`[MUSIC:MAIN] Connected to node ${node.options.host}:${node.options.port}`))
         this.on('nodeCreate', node => console.log(`[MUSIC:MAIN] Create node ${node.options.host}:${node.options.port}`))
         this.on('nodeDestroy', node => console.log(`[MUSIC:MAIN] Destroyed node ${node.options.host}:${node.options.port}`))
-        this.on('nodeDisconnect', (node, reason) => console.log(`[MUSIC:MAIN] Disconnected from node ${node.options.host}:${node.options.port}. Reason: ${reason}`))
+        this.on('nodeDisconnect', (node, reason) => console.log(`[MUSIC:MAIN] Disconnected from node ${node.options.host}:${node.options.port}. Reason: ${reason.reason}`))
         this.on('nodeError', (node, error) => console.log(`[MUSIC:MAIN] Errored from node ${node.options.host}:${node.options.port}. Error: ${error.message}`))
         this.on('nodeRaw', payload => console.log(`[MUSIC:MAIN] Received payload: ${JSON.stringify(payload)}`))
         this.on('nodeReconnect', node => console.log(`[MUSIC:MAIN] Reconnecting to node ${node.options.host}:${node.options.port}...`))
-        this.on('playerCreate', player => console.log(`[MUSIC:PLAYER] Created player on guild ${player.guild}. TextChannel: ${player.textChannel} VoiceChannel: ${player.voiceChannel}`))
-        this.on('playerDestroy', player => console.log(`[MUSIC:PLAYER] Destroyed player on guild ${player.guild}`))
-        this.on('playerMove', (player, oldChannel) => {
-            if (client.channels.cache.get(oldChannel)) {
-                return (<VoiceChannel>client.channels.cache.get(oldChannel)).join()
-            }
+        this.on('playerCreate', player => {
+            console.log(`[MUSIC:PLAYER] Created player on guild ${player.guild}. TextChannel: ${player.textChannel} VoiceChannel: ${player.voiceChannel}`)
+            players.set(player.guild, player.voiceChannel!)
+        })
+        this.on('playerDestroy', player => {
+            players.delete(player.guild)
+            console.log(`[MUSIC:PLAYER] Destroyed player on guild ${player.guild}`)
+        })
+        this.on('playerMove', (player, oldChannel, newChannel) => {
+            console.log(`[MUSIC:PLAYER] Player moved, FROM: ${oldChannel} NEW: ${newChannel}`)
         })
         this.on('queueEnd', player => {
             player.destroy()
@@ -63,8 +69,10 @@ export default class Music extends Manager {
                 if (data.channel.members.filter(r=>r.id !== client.user!.id).size === 0) {
                     if (this.players.get(data.guild.id)) {
                         const player = this.players.get(data.guild.id)!;
-                        (<TextChannel|undefined>client.channels.cache.get(player.textChannel!))?.send(Embed().setTitle('음성 채널에 아무도 없어 채널을 나갔어요!'))
-                        player.destroy()
+                        if (player.voiceChannel === data.channelID) {
+                            (<TextChannel|undefined>client.channels.cache.get(player.textChannel!))?.send(Embed().setTitle('음성 채널에 아무도 없어 채널을 나갔어요!'))
+                            player.destroy()
+                        }
                     }
                 }
             }

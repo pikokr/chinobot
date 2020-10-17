@@ -60,9 +60,9 @@ export default class Help extends Command {
             track = res.tracks
             const tracks = res.tracks
             const list = res.playlist!
-            await msg.util!.send(msg.embed().setTitle('플레이리스트 추가').addField('플레이리스트 제목', list.name, true).addField('길이', formatTime(list.duration), true).addField('곡 개수', tracks, true))
+            await msg.util!.send(msg.embed().setTitle('플레이리스트 추가').addField('전체 길이', formatTime(list.duration), true).addField('곡 개수', tracks.length, true))
         } else if (res.loadType === 'SEARCH_RESULT') {
-            const tracks = res.tracks.slice(0,10)
+            const tracks = res.tracks.slice(0,5)
             await msg.util!.send(msg.embed().setTitle(`1-${tracks.length}중에 곡을 선택해주세요! | 취소하려면 "취소"를 입력해주세요`).setDescription(tracks.map((t, i) => `[${i+1}. ${t.title.length > 40 ? (t.title.slice(0,40) + '...') : t.title}](${t.uri})`)))
             await new Promise(async resolve => {
                 const collector = msg.channel.createMessageCollector((m: Message) => m.author.id === msg.author.id && new RegExp(`[1-${tracks.length}]|취소`).test(m.content), {
@@ -84,9 +84,6 @@ export default class Help extends Command {
                 })
             })
         }
-
-        console.log(track)
-        console.log(shouldPlay)
 
         if (!shouldPlay) return
 

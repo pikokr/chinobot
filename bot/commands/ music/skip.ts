@@ -25,6 +25,7 @@ export default class Help extends Command {
             }
         }
         player.stop()
+        player.play()
         return msg.util!.send(msg.embed().setFooter('').setTitle('곡을 스킵했어요!'))
     }
 }
