@@ -38,7 +38,7 @@ class Dashboard extends Component<any> {
         return (
             <Layout>
                 <GuildContainer guild={guild}>
-                    ㅘ
+                    준비중입니다
                 </GuildContainer>
             </Layout>
         );
