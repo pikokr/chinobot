@@ -51,12 +51,12 @@ const categories = [
             {
                 name: '정지',
                 icon: Stop,
-                code: 'play'
+                code: 'stop'
             },
             {
                 name: '스킵',
                 icon: SkipNext,
-                code: 'play'
+                code: 'skip'
             },
         ]
     }
