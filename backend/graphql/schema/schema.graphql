@@ -15,6 +15,7 @@ type Query {
     status: Status
     me: SelfUser
     guild(id: String) : DashGuild
+    guilds: [Guild]
 }
 
 type DashGuild {
