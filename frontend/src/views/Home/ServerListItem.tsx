@@ -33,8 +33,6 @@ const useStyles = makeStyles(theme => ({
 const ServerListItem = ({guild}: {guild: any}) => {
     const classes = useStyles()
     const [expanded, setExpanded] = React.useState(false)
-
-    guild.brief = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda atque commodi deleniti eius fuga fugit, harum illum inventore iste laborum modi nemo nisi placeat praesentium quo reprehenderit sint tempora, voluptatem?'
     const Content = <>
         <CardHeader avatar={
             <Avatar src={guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : DefaultIcon}/>
@@ -43,11 +41,14 @@ const ServerListItem = ({guild}: {guild: any}) => {
         <ListItem>
             <ListItemText primary={`멤버 수: ${guild.members}`}/>
         </ListItem>
-        <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-                {guild.brief.length > 100 ? (guild.brief.slice(0,100) + '...') : guild.brief}
-            </Typography>
-        </CardContent>
+        {
+            guild.brief &&
+            <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                    {guild.brief.length > 100 ? (guild.brief.slice(0,100) + '...') : guild.brief}
+                </Typography>
+            </CardContent>
+        }
         <Divider/>
         <CardActions disableSpacing>
             <IconButton

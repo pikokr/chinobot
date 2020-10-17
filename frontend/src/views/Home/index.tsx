@@ -23,6 +23,7 @@ class Home extends Component {
                         invite
                         members
                         name
+                        brief
                     }
                     pages
                 }

@@ -7,6 +7,7 @@ import Dashboard from "../views/Servers/Dashboard";
 import NotFound from "../views/NotFound/index";
 import Toggle from "../views/Servers/Dashboard/Toggle";
 import List from "../views/Servers/Dashboard/List";
+import ServerListDetails from "../views/ServerListDetails";
 
 export default [
   {
@@ -48,6 +49,11 @@ export default [
     path: "/servers/:id/list",
     exact: true,
     component: List
+  },
+  {
+    path: '/server/:id',
+    exact: true,
+    component: ServerListDetails
   },
   {
     component: NotFound
