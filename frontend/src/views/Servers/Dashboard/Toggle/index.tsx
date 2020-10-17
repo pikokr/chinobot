@@ -19,11 +19,6 @@ const categories = [
         name: '기본',
         items: [
             {
-                name: '도움말',
-                code: 'help',
-                icon: QuestionAnswer
-            },
-            {
                 name: '개발자',
                 code: 'developer',
                 icon: Code
