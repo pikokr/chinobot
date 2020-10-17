@@ -1,23 +1,27 @@
 import React, {Component} from 'react';
-import {Avatar, Card, CardContent, CardHeader, IconButton, Typography} from "@material-ui/core";
+import {Avatar, Card, CardContent, CardHeader, CircularProgress, IconButton, Typography} from "@material-ui/core";
 import DefaultIcon from '../../assets/img/icon-default.png'
 import {Menu as MenuIcon} from "@material-ui/icons";
 import ServerDrawer from "../../views/Servers/Dashboard/ServerDrawer";
+import connectReducers from "../../utils/connectReducers";
 
 class GuildContainer extends Component<{
-    guild: any
+    guild: any,
+    user: any
 }> {
     state = {
         drawer: false
     }
 
     render() {
-        const {guild} = this.props
+        const {guild, user} = this.props
 
         return (
             <Card>
                 {
-                    guild === null ? '로딩중..' : guild === false ? <CardContent>
+                    guild === null ? <CardContent>
+                        <CircularProgress/>
+                    </CardContent> : !user || guild === false ? <CardContent>
                         이 페이지는 다음 이유로 표시되지 않았습니다.
                         <Typography>
                             서버가 존재하지 않음
@@ -36,6 +40,9 @@ class GuildContainer extends Component<{
                         </Typography>
                         <Typography>
                             API 서버에 오류가 발생함
+                        </Typography>
+                        <Typography>
+                            서버 정보 로드중
                         </Typography>
                     </CardContent> : (
                         <>
@@ -57,4 +64,4 @@ class GuildContainer extends Component<{
     }
 }
 
-export default GuildContainer;
+export default connectReducers(GuildContainer);

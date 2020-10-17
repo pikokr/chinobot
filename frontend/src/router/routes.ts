@@ -6,6 +6,7 @@ import InviteCallback from "../views/InviteCallback";
 import Dashboard from "../views/Servers/Dashboard";
 import NotFound from "../views/NotFound/index";
 import Toggle from "../views/Servers/Dashboard/Toggle";
+import List from "../views/Servers/Dashboard/List";
 
 export default [
   {
@@ -42,6 +43,11 @@ export default [
     path: "/servers/:id/toggle",
     exact: true,
     component: Toggle
+  },
+  {
+    path: "/servers/:id/list",
+    exact: true,
+    component: List
   },
   {
     component: NotFound

@@ -13,4 +13,4 @@ const mapDispatchToProps = (dispatch: any) => ({
     setUser: (data: any) => dispatch(updateSession({user: data})),
 })
 
-export default (component: ComponentType) => connect(mapStateToProps, mapDispatchToProps)(component)
+export default (component: ComponentType<any>) => connect(mapStateToProps, mapDispatchToProps)(component)

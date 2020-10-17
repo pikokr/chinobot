@@ -57,7 +57,7 @@ export default {
                 item.members = item.members.length
                 item.roles = item.roles.length
                 item.channels = item.channels.length
-                item.invite = (await broadcastEval(`(() => {
+                const invite = (await broadcastEval(`(() => {
                 const guild = this.guilds.cache.find(r=>r.id === '${item.id}')
                 if (!guild) return null
                 return guild.fetchInvites().then(async res => {
@@ -70,13 +70,19 @@ export default {
                             maxAge: 0
                         })
                         return inv.url
-                }).catch(err=>err.message)
+                }).catch(err=>({error: err.message}))
                 })()`)).find((r: string|undefined)=>r)
+                if (!invite.error) item.invite = invite
                 data.push(item)
             }
         }
 
-        const pages = _.chunk(_.sortBy(data.filter(r=>r.invite), 'members'), 30)
+        const pages = _.chunk(_.sortBy(data.filter(r=>r.invite), 'members').reverse(), 30)
+
+        if (!pages.length) return {
+            guilds: [],
+            pages: 0
+        }
 
         return {
             guilds: pages[page-1],

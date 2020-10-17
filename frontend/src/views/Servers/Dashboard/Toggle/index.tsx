@@ -4,9 +4,7 @@ import {graphql} from "../../../../utils/graphql";
 import {gql} from "@apollo/client";
 import GuildContainer from "../../../../components/GuildContainer";
 import {
-    Button,
     Card,
-    CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
@@ -107,13 +105,9 @@ class Toggle extends Component<any> {
             <Layout>
                 <Dialog open={this.state.loading}>
                     <DialogContent>
-                        데이터 처리중입니다. 잠시만 기다려주세요..
+                        데이터 처리중입니다...
                     </DialogContent>
-                    <DialogActions>
-                        <Button disabled>
-                            <CircularProgress/>
-                        </Button>
-                    </DialogActions>
+                    <DialogActions/>
                 </Dialog>
                 <GuildContainer guild={guild}>
                     {
