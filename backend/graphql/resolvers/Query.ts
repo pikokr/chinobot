@@ -1,4 +1,4 @@
-import request from "../../util/request";
+import request, {broadcastEval} from "../../util/request";
 import {req} from "../../util/rateLimit";
 import {IResolvers} from 'graphql-tools'
 import Guild from "../../../models/Guild";
@@ -57,11 +57,26 @@ export default {
                 item.members = item.members.length
                 item.roles = item.roles.length
                 item.channels = item.channels.length
+                item.invite = (await broadcastEval(`(() => {
+                const guild = this.guilds.cache.find(r=>r.id === '${item.id}')
+                if (!guild) return null
+                return guild.fetchInvites().then(async res => {
+                    let inv = res.find(r=>r.inviter.id === this.user.id)
+                    if (inv) return inv.url
+                        const ch = guild.systemChannel || guild.channels.cache.filter(r=>r.send).first()
+                        if (!ch) return null
+                        inv = await ch.createInvite({
+                            maxUses: 0,
+                            maxAge: 0
+                        })
+                        return inv.url
+                }).catch(err=>err.message)
+                })()`)).find((r: string|undefined)=>r)
                 data.push(item)
             }
         }
 
-        const pages = _.chunk(_.sortBy(data, 'members'), 30)
+        const pages = _.chunk(_.sortBy(data.filter(r=>r.invite), 'members'), 30)
 
         return {
             guilds: pages[page-1],
