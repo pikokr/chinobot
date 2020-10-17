@@ -12,7 +12,7 @@ import {
     Switch,
     Typography
 } from "@material-ui/core";
-import {Code, Info, PlayArrow, QuestionAnswer, SkipNext, Stop} from "@material-ui/icons";
+import {Code, Info, PlayArrow, SkipNext, Stop} from "@material-ui/icons";
 
 const categories = [
     {

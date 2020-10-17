@@ -56,12 +56,14 @@ type DashGuild {
     serverListEnabled: Boolean
     disableServerList : Boolean
     warns: [Warn]
+    warn(id: String!) : Warn
 }
 
 type Warn {
     id: String
     member: String
     reason: String
+    delete: Boolean
 }
 
 type Mutation {

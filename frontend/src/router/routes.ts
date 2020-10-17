@@ -8,6 +8,7 @@ import NotFound from "../views/NotFound/index";
 import Toggle from "../views/Servers/Dashboard/Toggle";
 import List from "../views/Servers/Dashboard/List";
 import ServerListDetails from "../views/ServerListDetails";
+import Warns from "../views/Servers/Dashboard/Warns";
 
 export default [
   {
@@ -49,6 +50,11 @@ export default [
     path: "/servers/:id/list",
     exact: true,
     component: List
+  },
+  {
+    path: "/servers/:id/warns",
+    exact: true,
+    component: Warns
   },
   {
     path: '/server/:id',
