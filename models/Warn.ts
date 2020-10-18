@@ -4,13 +4,16 @@ interface Warn extends mongoose.Document {
     id: string
     guild: string
     reason: string
+    member: string
+    createdAt: number
 }
 
 const schema = new mongoose.Schema({
     id: {type: String, required: true},
     guild: {type: String, required: true},
     reason: {type: String, required: true, default: '사유 없음'},
-    createdAt: {type: Number, required: true, default: () => Date.now()}
+    createdAt: {type: Number, required: true, default: () => Date.now()},
+    member: {type: String, required: true},
 })
 
 let warn: mongoose.Model<Warn>

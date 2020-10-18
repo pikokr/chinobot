@@ -32,5 +32,23 @@ export default {
         result.user.tag = result.user.username + '#' + result.user.discriminator
         result.accessToken = json.access_token
         return jwt.sign(result, config.web.jwt)
+    },
+    invite: async (source: any, {code}: any) => {
+        const data = {
+            client_id: config.web.oauth2.clientID,
+            client_secret: config.web.oauth2.clientSecret,
+            grant_type: 'authorization_code',
+            redirect_uri: config.web.invite,
+            code: code,
+            scope: 'bot',
+        };
+        const res = (await fetch('https://discord.com/api/oauth2/token', {
+            method: 'POST',
+            body: new URLSearchParams(data),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }))
+        return res.status === 200
     }
 }

@@ -4,15 +4,50 @@ enum GuildLoadType {
 }
 
 enum Command {
-    dashboard
-    help
-    dev
+    # info
+    guild_info
+
+    # general
+    developer
+
+    # music
+    play
+    stop
+    skip
+
+    # moderator
+    warn
+    warn_stack
+    warn_list
+    clear
+    kick
+    ban
 }
 
 type Query {
     status: Status
     me: SelfUser
     guild(id: String) : DashGuild
+    guilds: [Guild]
+    listGuilds(page: Int) : GuildRankResult
+    listGuild(id: String!) : ListGuild
+}
+
+type GuildRankResult {
+    guilds: [ListGuild]
+    pages: Int
+}
+
+type ListGuild {
+    id: String
+    icon: String
+    name: String
+    members: Int
+    background: String
+    cardBackground: String
+    invite: String
+    brief: String
+    description: String
 }
 
 type DashGuild {
@@ -25,10 +60,28 @@ type DashGuild {
     channels: Int
     enable(command: Command!) : [String]
     disable(command: Command!) : [String]
+    disabled: [String]
+    enableServerList : Boolean
+    serverListEnabled: Boolean
+    disableServerList : Boolean
+    warns: [Warn]
+    warn(id: String!) : Warn
+    setDescription(description: String!): Boolean
+    setBrief(brief: String!): Boolean
+    description: String
+    brief: String
+}
+
+type Warn {
+    id: String
+    member: String
+    reason: String
+    delete: Boolean
 }
 
 type Mutation {
     login(code: String!) : String
+    invite(code: String!) : Boolean
 }
 
 type User {

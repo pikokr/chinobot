@@ -32,10 +32,11 @@ export default class Clear extends Command {
         if (member.hasPermission('ADMINISTRATOR')) return msg.util!.send('관리자에게 경고를 지급할 수 없어요!')
         const warn = new Warn()
         warn.guild = msg.guild!.id
-        warn.id = member.id
+        warn.member = member.id
+        warn.id = Date.now().toString(16)
         warn.reason = reason
         await warn.save()
-        await msg.util!.send(msg.embed().setTitle('경고 지급됨').setDescription(`멤버: ${member}\n사유: ${reason}`))
+        await msg.util!.send(msg.embed().setTitle('경고 지급됨').setDescription(`ID: ${warn.id}\n멤버: ${member}\n사유: ${reason}`))
         const guild = (await Guild.findOne({id:msg.guild!.id}))!
         if (guild.warnStack === 0) {
             return

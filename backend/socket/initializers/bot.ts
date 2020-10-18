@@ -1,6 +1,5 @@
 import SocketIO from "socket.io";
 import config from '../../../config.json'
-import request from "../../util/request";
 
 export default (io: SocketIO.Server) => {
     const ns = io.of('/bot')
@@ -12,6 +11,16 @@ export default (io: SocketIO.Server) => {
         socket.disconnect(true)
     })
     ns.on('connection', async socket => {
+        socket.on('response', (data: any) => {
+            if (data.evt) {
+                console.log(`[RESPONSE] Got response of request ${data.evt}`)
+                const resolve = global.requestQueue.get(data.evt)
+                if (resolve) {
+                    resolve(data.data)
+                    global.requestQueue.delete(data.evt)
+                }
+            }
+        })
         console.log(`New bot connection: ${socket.id}`)
     })
     global.namespaces.bot = ns

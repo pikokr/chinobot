@@ -18,6 +18,15 @@
       "clientSecret": "",
       "callback": ""
     },
-    "jwt": ""
-  }
+    "jwt": "",
+    "invite": "",
+    "frontend": ""
+  },
+  "lavalink": [
+    {
+      "host": "localhost",
+      "port": 2333,
+      "password": "youshallnotpass"
+    }
+  ]
 }

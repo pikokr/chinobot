@@ -1,8 +1,9 @@
 import Client from "./util/Client";
-import {CommandHandler, ListenerHandler} from "discord-akairo";
+import {CommandHandler, InhibitorHandler, ListenerHandler} from "discord-akairo";
 import config from '../config.json'
 import {Message, MessageEmbed} from "discord.js";
 import {connect} from "mongoose";
+import Music from "./util/music";
 
 const client = new Client()
 
@@ -22,6 +23,8 @@ declare module 'discord.js' {
     interface Client {
         listenerHandler: ListenerHandler
         commandHandler: CommandHandler
+        inhibitorHandler: InhibitorHandler
+        music: Music
     }
     interface Message {
         embed() : MessageEmbed

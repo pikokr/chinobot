@@ -59,45 +59,36 @@ class Servers extends Component<any> {
                                 {
                                     this.state.guilds.map((guild: any, i: number) => {
                                         const Content = <CardActionArea component="div">
-                                            {/*<CardMedia
-                                                image={guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : DefaultIcon}
-                                                title={guild.name} style={{
-                                                height: 0,
-                                                paddingTop: '50%',
-                                            }}/>
-                                                <CardContent>
-                                                <Typography variant="h6">
-                                                {guild.name}
-                                                </Typography>
-                                                </CardContent>*/}
-                                                <CardHeader avatar={
-                                                    <Avatar src={guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : DefaultIcon}/>
-                                                } title={guild.name}/>
+                                            <CardHeader avatar={
+                                                <Avatar
+                                                    src={guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : DefaultIcon}/>
+                                            } title={guild.name}/>
                                         </CardActionArea>
                                         return (
-                                        <Grid item xs={12} md={4} lg={3} component={motion.div} variants={{
-                                            hidden: {y: 20, opacity: 0},
-                                            visible: {
-                                                y: 0,
-                                                opacity: 1
-                                            }
-                                        }} key={i}>
-                                            <Card>
-                                                {
-                                                    guild.bot ? <Link to={`/servers/${guild.id}`} style={{
-                                                        color: '#000',
-                                                        textDecoration: 'none'
-                                                    }}>
-                                                        {Content}
-                                                    </Link> : <div onClick={() => {
-                                                        window.open(`${INVITE_URL}&guild_id=${guild.id}`, '', 'width=350;height=400')
-                                                    }}>
-                                                        {Content}
-                                                    </div>
+                                            <Grid item xs={12} md={4} lg={3} component={motion.div} variants={{
+                                                hidden: {y: 20, opacity: 0},
+                                                visible: {
+                                                    y: 0,
+                                                    opacity: 1
                                                 }
-                                            </Card>
-                                        </Grid>
-                                    ) })
+                                            }} key={i}>
+                                                <Card>
+                                                    {
+                                                        guild.bot ? <Link to={`/servers/${guild.id}`} style={{
+                                                            color: '#000',
+                                                            textDecoration: 'none'
+                                                        }}>
+                                                            {Content}
+                                                        </Link> : <div onClick={() => {
+                                                            window.open(`${INVITE_URL}&guild_id=${guild.id}`, 'Invite', 'width=350,height=700')
+                                                        }}>
+                                                            {Content}
+                                                        </div>
+                                                    }
+                                                </Card>
+                                            </Grid>
+                                        )
+                                    })
                                 }
                             </Grid>
                         )

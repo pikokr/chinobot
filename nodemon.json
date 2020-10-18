@@ -1,5 +1,13 @@
 {
   "delay": 2000,
   "ext": "ts,graphql",
-  "exec": "ts-node backend"
+  "exec": "ts-node backend",
+  "ignore": [
+    "frontend",
+    "bot"
+  ],
+  "signal": "SIGINT",
+  "events": {
+    "restart": "fuser -kn tcp 3060"
+  }
 }

@@ -11,6 +11,8 @@ import {connect} from "mongoose";
 
 global.namespaces = {}
 
+global.requestQueue = new Map()
+
 const app = express()
 
 app.use(cors({
@@ -63,6 +65,7 @@ declare global {
             namespaces: {
                 bot?: Namespace
             }
+            requestQueue: Map<string, (data: any)=>void>
         }
     }
 }

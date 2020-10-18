@@ -8,7 +8,7 @@ export const req = (...data: [
     await fetch(...data).then(async result => {
         if (result.status === 429) {
             const json = await result.json()
-            console.log(json)
+            console.log(`Retrying an request after ${json.retry_after}ms`)
             return resolve(new Promise(r2=>setTimeout(r2, json.retry_after)).then(() => req(...data)))
         }
         return resolve(result)

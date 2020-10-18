@@ -33,14 +33,19 @@ io.on('shards', async (data: any) => {
             shards.push({id: shard.id, online: shard.ready})
         }
     }
-    io.emit(data.event, shards)
+    io.emit('response', {data: shards, evt: data.event})
+})
+
+io.on('eval', async (data: any) => {
+    const res = (await Promise.all(manager.shards.filter(r=>r.ready).map(shard => shard.eval(data.payload.script))))
+    io.emit('response', {evt: data.event, data: res || null})
 })
 
 io.on('guild', async (data: any) => {
     const res = (await Promise.all(manager.shards.filter(r=>r.ready).map(shard => shard.eval(`
     this.guilds.cache.get('${data.payload.id}')?.toJSON()
     `)))).find(r=>r)
-    io.emit(data.event, res || null)
+    io.emit('response', {evt: data.event, data: res || null})
 })
 
 io.on('guilds', async (data: any) => {
@@ -51,7 +56,7 @@ io.on('guilds', async (data: any) => {
         `)))).find(r=>r)
         result.push(res)
     }
-    io.emit(data.event, result || null)
+    io.emit('response', {evt: data.event, data: result || null})
 })
 
 io.on('connect', () => console.log('Connected to backend socket'))
