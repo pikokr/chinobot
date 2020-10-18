@@ -22,7 +22,7 @@ import {
     Warning,
     List as ListIcon,
     ClearAll,
-    Block, AllOut
+    Block, AllOut, MusicNote, SurroundSound
 } from "@material-ui/icons";
 
 const categories = [
@@ -55,6 +55,8 @@ const categories = [
             {name: '재생', icon: PlayArrow, code: 'play'},
             {name: '정지', icon: Stop, code: 'stop'},
             {name: '스킵', icon: SkipNext, code: 'skip'},
+            {name: '볼륨', icon: SurroundSound, code: 'volume'},
+            {name: '현재곡', icon: MusicNote, code: 'now_playing'}
         ]
     }
 ]
