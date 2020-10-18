@@ -4,11 +4,18 @@ enum GuildLoadType {
 }
 
 enum Command {
+    # info
     guild_info
+
+    # general
     developer
+
+    # music
     play
     stop
     skip
+
+    # moderator
     warn
     unwarn
     warn_stack
