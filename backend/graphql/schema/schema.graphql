@@ -57,6 +57,10 @@ type DashGuild {
     disableServerList : Boolean
     warns: [Warn]
     warn(id: String!) : Warn
+    setDescription(description: String!): Boolean
+    setBrief(brief: String!): Boolean
+    description: String
+    brief: String
 }
 
 type Warn {

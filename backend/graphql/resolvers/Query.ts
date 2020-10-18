@@ -35,7 +35,6 @@ export default {
         if (!guilds.find((r: any) => r.id === args.id) || ((guilds.find((r: any) => r.id === args.id).permissions & 8) === 0)) {
             return null
         }
-        args.id.replace('"', '\\"')
         const data = (await Promise.all(Object.values(global.namespaces.bot!.sockets).map(socket => request(socket, 'guild', {
             id: args.id
         })))).find(r => r)
@@ -54,9 +53,7 @@ export default {
                 id: guild.id
             })))).find(r => r)
             if (item) {
-                item.description = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid corporis delectus dolore doloremque exercitationem in ipsam ipsum itaque iure molestias natus nobis nulla provident, quod sit totam vero voluptas?
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid corporis delectus dolore doloremque exercitationem in ipsam ipsum itaque iure molestias natus nobis nulla provident, quod sit totam vero voluptas?
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid corporis delectus dolore doloremque exercitationem in ipsam ipsum itaque iure molestias natus nobis nulla provident, quod sit totam vero voluptas?`
+                item.description = guild.description
                 item.members = item.members.length
                 item.roles = item.roles.length
                 item.channels = item.channels.length
@@ -75,7 +72,7 @@ export default {
                         return inv.url
                 }).catch(err=>({error: err.message}))
                 })()`)).find((r: string | undefined) => r)
-                item.brief = 'Lorem ipsum dolor sit amet'
+                item.brief = guild.brief
                 if (!invite.error) item.invite = invite
                 data.push(item)
             }
@@ -100,10 +97,8 @@ export default {
             id: guild.id
         })))).find(r => r)
         if (item) {
-            item.brief = 'Lorem ipsum dolor sit amet'
-            item.description = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid corporis delectus dolore doloremque exercitationem in ipsam ipsum itaque iure molestias natus nobis nulla provident, quod sit totam vero voluptas?
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid corporis delectus dolore doloremque exercitationem in ipsam ipsum itaque iure molestias natus nobis nulla provident, quod sit totam vero voluptas?
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid corporis delectus dolore doloremque exercitationem in ipsam ipsum itaque iure molestias natus nobis nulla provident, quod sit totam vero voluptas?`
+            item.brief = guild.brief
+            item.description = guild.description
             item.members = item.members.length
             item.roles = item.roles.length
             item.channels = item.channels.length

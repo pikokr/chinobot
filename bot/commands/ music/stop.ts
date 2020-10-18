@@ -24,11 +24,11 @@ export default class Help extends Command {
         }
 
         if (!msg.member!.hasPermission('ADMINISTRATOR')) {
-            const ls = Array.from(player.queue)
+            const ls = [...player.queue]
             if (player.queue.current) {
                 ls.push(player.queue.current)
             }
-            if (ls.filter(v=>v.author === msg.author.id).length !== ls.length) {
+            if (ls.filter(v=>(v.requester as any).id === msg.author.id).length !== ls.length) {
                 return msg.util!.send(msg.embed().setFooter('').setTitle('재생을 정지하려면 남은 곡이 모두 자신이 신청한 곡이거나 관리자 권한이 있어야해요!'))
             }
         }

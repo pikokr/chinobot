@@ -20,7 +20,7 @@ export default class Help extends Command {
         }
 
         if (!msg.member!.hasPermission('ADMINISTRATOR')) {
-            if (player.queue.current.author !== msg.author.id) {
+            if ((player.queue.current.requester as any).id !== msg.author.id) {
                 return msg.util!.send(msg.embed().setTitle('곡은 신청한 사람이나 관리자만 스킵할 수 있어요!').setFooter(''))
             }
         }

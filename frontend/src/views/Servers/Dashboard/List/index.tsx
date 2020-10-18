@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import Layout from "../../../../components/Layout";
 import {
+    Button, CircularProgress,
     Dialog,
     DialogActions,
-    DialogContent, Switch, Typography,
+    DialogContent, Switch, TextField, Typography,
 } from "@material-ui/core";
 import GuildContainer from "../../../../components/GuildContainer";
 import {graphql} from "../../../../utils/graphql";
@@ -12,10 +13,16 @@ import {gql} from "@apollo/client";
 class List extends Component<any> {
     state: {
         guild: any
-        loading: boolean
+        loading: boolean,
+        updatingData: boolean,
+        desc: string,
+        brief: string
     } = {
         guild: null,
-        loading: true
+        loading: true,
+        updatingData: false,
+        desc: '',
+        brief: ''
     }
 
     async componentDidMount() {
@@ -27,6 +34,8 @@ class List extends Component<any> {
                     name
                     disabled
                     serverListEnabled
+                    description
+                    brief
                 }
             }
         `)
@@ -34,7 +43,9 @@ class List extends Component<any> {
             this.setState({
                 guild: data.guild,
                 disables: data.guild.disabled,
-                loading: false
+                loading: false,
+                brief: data.guild.brief || '',
+                desc: data.guild.description || ''
             })
         } else {
             this.setState({
@@ -87,7 +98,31 @@ class List extends Component<any> {
                     </Typography>
                     {
                         guild && guild.serverListEnabled && <div>
-                            테스트
+                            <TextField onChange={e => this.setState({brief: e.target.value})} label="짧은 설명(홈에 표시됩니다)" fullWidth value={this.state.brief} disabled={this.state.updatingData}/>
+                            <p/>
+                            <TextField onChange={e => this.setState({desc: e.target.value})} label="설명(서버 정보 페이지에 표시됩니다)" disabled={this.state.updatingData} value={this.state.desc} fullWidth multiline/>
+                            <p/>
+                            <Typography align="right">
+                                <Button disabled={this.state.updatingData} variant="contained" onClick={async () => {
+                                    this.setState({
+                                        updatingData: true
+                                    })
+                                    await graphql(gql`
+                                        query {
+                                            guild(id: "${this.props.match.params.id.replace('"', '\\"')}") {
+                                                setDescription(description: "${this.state.desc.replace('"', '\\"')}")
+                                                setBrief(brief: "${this.state.brief.replace('"', '\\"')}")
+                                            }
+                                        }
+                                    `)
+                                    await this.componentDidMount.bind(this)()
+                                    this.setState({
+                                        updatingData: false
+                                    })
+                                }}>{
+                                    this.state.updatingData ? <CircularProgress size={20}/> : '저장'
+                                }</Button>
+                            </Typography>
                         </div>
                     }
                 </GuildContainer>

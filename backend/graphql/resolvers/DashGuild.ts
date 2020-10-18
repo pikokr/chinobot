@@ -46,5 +46,25 @@ export default {
     },
     warn: async (source, {id}) => {
         return Warn.findOne({guild: source.id, id})
+    },
+    setDescription: async (source, {description}) => {
+        const data = await Guild.findOne({id: source.id})
+        if (!data) return false
+        data.description = description
+        await data.save()
+        return true
+    },
+    setBrief: async (source, {brief}) => {
+        const data = await Guild.findOne({id: source.id})
+        if (!data) return false
+        data.brief = brief
+        await data.save()
+        return true
+    },
+    description: async source => {
+        return (await Guild.findOne({id: source.id}))!.description
+    },
+    brief: async source => {
+        return (await Guild.findOne({id: source.id}))!.brief
     }
 } as IResolvers

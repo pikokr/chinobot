@@ -2,9 +2,11 @@ import * as mongoose from 'mongoose'
 
 interface Guild extends mongoose.Document {
     id: string
-    warnStack: number,
-    disabledCommands: string[],
+    warnStack: number
+    disabledCommands: string[]
     serverListEnabled: boolean
+    brief: string|null
+    description: string|null
 }
 
 const schema = new mongoose.Schema({
@@ -19,6 +21,16 @@ const schema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    brief: {
+        type: String,
+        required: false,
+        default: null
+    },
+    description: {
+        type: String,
+        required: false,
+        default: null
     }
 })
 

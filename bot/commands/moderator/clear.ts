@@ -19,6 +19,6 @@ export default class Clear extends Command {
     }
     async exec(msg: Message, {count}: {count: number}) {
         const messages = await (<TextChannel>msg.channel).bulkDelete(count+1)
-        await msg.util?.send(`> :white_check_mark: 메시지 ${messages.size}개가 삭제되었어요!`)
+        await msg.util?.send(`> :white_check_mark: 메시지 ${messages.size-1}개가 삭제되었어요!`)
     }
 }
