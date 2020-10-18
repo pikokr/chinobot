@@ -22,7 +22,7 @@ import {
     Warning,
     List as ListIcon,
     ClearAll,
-    Block, AllOut, MusicNote, SurroundSound
+    Block, MusicNote, SurroundSound, ExitToApp
 } from "@material-ui/icons";
 
 const categories = [
@@ -46,7 +46,7 @@ const categories = [
             {code: 'warn_stack', icon: ListIcon, name: '경고 스택 설정'},
             {name: '채팅청소', code: 'clear', icon: ClearAll},
             {name: '차단', code: 'ban', icon: Block},
-            {name: '추방', code: 'kick', icon: AllOut}
+            {name: '추방', code: 'kick', icon: ExitToApp}
         ]
     },
     {
