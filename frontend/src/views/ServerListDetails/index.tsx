@@ -49,7 +49,7 @@ class ServerListDetails extends Component<any> {
                                             <img style={{
                                                 width: '100%'
                                             }}
-                                                 src={guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : DefaultIcon}
+                                                 src={guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` : DefaultIcon}
                                                  alt="server icon"/>
                                         </Grid>
                                         <Grid item xs={8} md={10}>
