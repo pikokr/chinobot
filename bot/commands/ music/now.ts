@@ -29,7 +29,7 @@ export default class Help extends Command {
 
         embed.addField('저자', t.author, true)
 
-        embed.addField('신청자', (t.requester as User).tag)
+        embed.addField('신청자', (t.requester as User).tag, true)
 
         if (!t.isStream) {
             embed.setDescription('```\n' + `${formatTime(player.position)}/${formatTime(t.duration)}\n` + createBar(t.duration, player.position)[0] + '```')
