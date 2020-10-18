@@ -29,76 +29,32 @@ const categories = [
     {
         name: '기본',
         items: [
-            {
-                name: '개발자',
-                code: 'developer',
-                icon: Code
-            }
+            {name: '개발자', code: 'developer', icon: Code}
         ]
     },
     {
         name: '정보',
         items: [
-            {
-                name: '서버 정보',
-                code: 'guild_info',
-                icon: Info
-            }
+            {name: '서버 정보', code: 'guild_info', icon: Info}
         ]
     },
     {
         name: '관리',
         items: [
-            {
-                name: '경고',
-                code: 'warn',
-                icon: Warning
-            },
-            {
-                name: '경고 목록',
-                icon: ListAlt,
-                code: 'warn_list'
-            },
-            {
-                code: 'warn_stack',
-                icon: ListIcon,
-                name: '경고 스택 설정'
-            },
-            {
-                name: '채팅청소',
-                code: 'clear',
-                icon: ClearAll
-            },
-            {
-                name: '차단',
-                code: 'ban',
-                icon: Block
-            },
-            {
-                name: '추방',
-                code: 'kick',
-                icon: AllOut
-            }
+            {name: '경고', code: 'warn', icon: Warning},
+            {name: '경고 목록', icon: ListAlt, code: 'warn_list'},
+            {code: 'warn_stack', icon: ListIcon, name: '경고 스택 설정'},
+            {name: '채팅청소', code: 'clear', icon: ClearAll},
+            {name: '차단', code: 'ban', icon: Block},
+            {name: '추방', code: 'kick', icon: AllOut}
         ]
     },
     {
         name: '음악',
         items: [
-            {
-                name: '재생',
-                icon: PlayArrow,
-                code: 'play'
-            },
-            {
-                name: '정지',
-                icon: Stop,
-                code: 'stop'
-            },
-            {
-                name: '스킵',
-                icon: SkipNext,
-                code: 'skip'
-            },
+            {name: '재생', icon: PlayArrow, code: 'play'},
+            {name: '정지', icon: Stop, code: 'stop'},
+            {name: '스킵', icon: SkipNext, code: 'skip'},
         ]
     }
 ]
