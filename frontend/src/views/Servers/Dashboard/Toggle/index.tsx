@@ -12,7 +12,18 @@ import {
     Switch,
     Typography
 } from "@material-ui/core";
-import {Code, Info, PlayArrow, SkipNext, Stop} from "@material-ui/icons";
+import {
+    Code,
+    Info,
+    ListAlt,
+    PlayArrow,
+    SkipNext,
+    Stop,
+    Warning,
+    List as ListIcon,
+    ClearAll,
+    Block, AllOut
+} from "@material-ui/icons";
 
 const categories = [
     {
@@ -32,6 +43,41 @@ const categories = [
                 name: '서버 정보',
                 code: 'guild_info',
                 icon: Info
+            }
+        ]
+    },
+    {
+        name: '관리',
+        items: [
+            {
+                name: '경고',
+                code: 'warn',
+                icon: Warning
+            },
+            {
+                name: '경고 목록',
+                icon: ListAlt,
+                code: 'warn_list'
+            },
+            {
+                code: 'warn_stack',
+                icon: ListIcon,
+                name: '경고 스택 설정'
+            },
+            {
+                name: '채팅청소',
+                code: 'clear',
+                icon: ClearAll
+            },
+            {
+                name: '차단',
+                code: 'ban',
+                icon: Block
+            },
+            {
+                name: '추방',
+                code: 'kick',
+                icon: AllOut
             }
         ]
     },

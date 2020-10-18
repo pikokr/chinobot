@@ -17,9 +17,11 @@ enum Command {
 
     # moderator
     warn
-    unwarn
     warn_stack
     warn_list
+    clear
+    kick
+    ban
 }
 
 type Query {
