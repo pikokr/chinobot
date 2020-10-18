@@ -6,6 +6,7 @@ enum GuildLoadType {
 enum Command {
     # info
     guild_info
+    npm
 
     # general
     developer
