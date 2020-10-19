@@ -17,7 +17,7 @@ const HeroSection = () => {
 
     return (
         <div className={classes.root} style={{
-            background: '#fff',
+            background: '#000',
             backgroundSize: 'cover',
             backgroundPosition: 'center'
         }}>
@@ -28,7 +28,7 @@ const HeroSection = () => {
                 치노봇
             </Typography>
             <Typography variant="h6" style={{
-                color: '#00ff66',
+                color: '#fff',
                 fontWeight: 'bolder'
             }}>
                 <span style={{
