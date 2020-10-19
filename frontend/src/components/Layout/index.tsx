@@ -43,14 +43,16 @@ class Layout extends Component<any> {
                 <CssBaseline/>
                 <Header/>
                 <Toolbar/>
-                <Container>
-                    <div style={{
-                        paddingTop: 10,
-                        width: '100%'
-                    }}>
-                        {this.props.children}
-                    </div>
-                </Container>
+                {
+                    this.props.noContainer ? this.props.children : <Container>
+                        <div style={{
+                            paddingTop: 10,
+                            width: '100%'
+                        }}>
+                            {this.props.children}
+                        </div>
+                    </Container>
+                }
             </>
         );
     }

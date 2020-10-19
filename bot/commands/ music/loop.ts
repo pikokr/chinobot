@@ -34,7 +34,7 @@ export default class Help extends Command {
                 player.setTrackRepeat(true)
                 return msg.util!.send(msg.embed().setTitle('반복').setDescription('현재 곡을 반복할게요!'))
             default:
-                return msg.util!.send(msg.embed().setTitle('반복').setDescription('명령어 사용법: 반복 [해제/대기열/곡]'))
+                return msg.util!.send(msg.embed().setTitle('반복').setDescription(`명령어 사용법: 반복 [해제/대기열/곡], 현재: ${player.trackRepeat ? '곡 반복' : player.queueRepeat ? '대기열 반복' : '반복 안함'}`))
        }
     }
 }
