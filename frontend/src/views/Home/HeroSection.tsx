@@ -1,6 +1,7 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Typography} from "@material-ui/core";
+import hero from '../../assets/img/hero.jpeg'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -17,7 +18,7 @@ const HeroSection = () => {
 
     return (
         <div className={classes.root} style={{
-            background: '#000',
+            background: `url(${hero})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center'
         }}>
