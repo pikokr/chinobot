@@ -8,8 +8,8 @@ class InviteCallback extends Component {
         const params = new URLSearchParams(window.location.search.slice(1))
         await graphql(gql`
             mutation {
-                invite(code: "${params.get('code')?.replace('"', '\\""')}")
-        }
+                invite(code: "${params.get('code')?.replace('"', '\\"')}")
+            }
         `)
         window.opener.location.reload()
         window.close()
