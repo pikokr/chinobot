@@ -48,7 +48,7 @@ class GuildContainer extends Component<{
                         <>
                             <CardHeader title={guild.name} avatar={
                                 <Avatar
-                                    src={guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : DefaultIcon}/>
+                                    src={guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` : DefaultIcon}/>
                             } action={<IconButton onClick={() => this.setState({drawer: true})}>
                                 <MenuIcon/>
                             </IconButton>}/>

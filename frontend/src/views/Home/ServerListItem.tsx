@@ -35,7 +35,7 @@ const ServerListItem = ({guild}: {guild: any}) => {
     const [expanded, setExpanded] = React.useState(false)
     const Content = <>
         <CardHeader avatar={
-            <Avatar src={guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : DefaultIcon}/>
+            <Avatar src={guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` : DefaultIcon}/>
         } title={guild.name}/>
         <Divider/>
         <ListItem>

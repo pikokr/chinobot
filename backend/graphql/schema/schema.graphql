@@ -6,6 +6,7 @@ enum GuildLoadType {
 enum Command {
     # info
     guild_info
+    npm
 
     # general
     developer
@@ -14,6 +15,8 @@ enum Command {
     play
     stop
     skip
+    volume
+    now_playing
 
     # moderator
     warn

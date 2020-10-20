@@ -61,7 +61,7 @@ class Servers extends Component<any> {
                                         const Content = <CardActionArea component="div">
                                             <CardHeader avatar={
                                                 <Avatar
-                                                    src={guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : DefaultIcon}/>
+                                                    src={guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` : DefaultIcon}/>
                                             } title={guild.name}/>
                                         </CardActionArea>
                                         return (

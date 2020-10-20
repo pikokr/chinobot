@@ -11,7 +11,7 @@ class UserPopup extends Component<any> {
             <Popover open={this.props.open} anchorEl={this.props.anchorEl} onClose={this.props.onClose}>
                 <ListItem>
                     <ListItemIcon>
-                        <Avatar src={`https://cdn.discordapp.com/avatars/${user.user.id}/${user.user.avatar}`}/>
+                        <Avatar src={`https://cdn.discordapp.com/avatars/${user.user.id}/${user.user.avatar}.png`}/>
                     </ListItemIcon>
                     <ListItemText primary={user.user.tag}/>
                 </ListItem>

@@ -1,6 +1,7 @@
 import config from "../../../config.json";
 import fetch from "node-fetch";
 import jwt from "jsonwebtoken";
+import {req} from "../../util/rateLimit";
 
 export default {
     login: async (source: any, {code}: any) => {
@@ -12,7 +13,7 @@ export default {
             code: code,
             scope: 'identify guilds',
         };
-        const res = (await fetch('https://discord.com/api/oauth2/token', {
+        const res = (await req('https://discord.com/api/oauth2/token', {
             method: 'POST',
             body: new URLSearchParams(data),
             headers: {
@@ -24,7 +25,7 @@ export default {
             return null
         }
         const result: any = {}
-        result.user = await (await fetch('https://discord.com/api/users/@me', {
+        result.user = await (await req('https://discord.com/api/users/@me', {
             headers: {
                 Authorization: `${json.token_type} ${json.access_token}`
             }
