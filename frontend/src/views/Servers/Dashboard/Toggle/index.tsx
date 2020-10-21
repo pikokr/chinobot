@@ -36,12 +36,7 @@ const categories = [
     {
         name: '정보',
         items: [
-            {name: '서버 정보', code: 'guild_info', icon: Info},
-            {
-                icon: Search,
-                code: 'npm',
-                name: 'NPM 검색'
-            }
+            {name: '서버 정보', code: 'guild_info', icon: Info}
         ]
     },
     {
@@ -63,6 +58,16 @@ const categories = [
             {name: '스킵', icon: SkipNext, code: 'skip'},
             {name: '볼륨', icon: SurroundSound, code: 'volume'},
             {name: '현재곡', icon: MusicNote, code: 'now_playing'}
+        ]
+    },
+    {
+        name: '검색',
+        items: [
+            {
+                icon: Search,
+                code: 'npm',
+                name: 'NPM 검색'
+            }
         ]
     }
 ]
