@@ -22,7 +22,7 @@ import {
     Warning,
     List as ListIcon,
     ClearAll,
-    Block, MusicNote, SurroundSound, ExitToApp, Dashboard
+    Block, MusicNote, SurroundSound, ExitToApp, Dashboard, Search
 } from "@material-ui/icons";
 
 const categories = [
@@ -36,7 +36,12 @@ const categories = [
     {
         name: '정보',
         items: [
-            {name: '서버 정보', code: 'guild_info', icon: Info}
+            {name: '서버 정보', code: 'guild_info', icon: Info},
+            {
+                icon: Search,
+                code: 'npm',
+                name: 'NPM 검색'
+            }
         ]
     },
     {
