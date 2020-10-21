@@ -34,6 +34,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install backend dependencies
         run: npm install
+      - name: Copy config file for build test
+        run: cp config.inc.json config.json
       - name: Build backend
         run: npx tsc
       - name: Install frontend dependencies
