@@ -26,6 +26,14 @@ enum Command {
     clear
     kick
     ban
+
+    # Coding
+    search_akairo
+    search_commando
+    search_djs
+    compile
+    typescript
+    babel
 }
 
 type Query {

@@ -5,7 +5,7 @@ import {transform} from '@babel/core'
 
 export default class Help extends Command {
     constructor() {
-        super('trans_babel', {
+        super('babel', {
             aliases: ['바벨', 'babel'],
             description: '바벨 코드를 자바스크립트로 트랜스파일 하는 명령어',
             category: 'coding',
