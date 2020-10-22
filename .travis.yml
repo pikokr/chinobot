@@ -1,0 +1,9 @@
+language: nodejs
+
+before_script:
+  - npm i -g yarn
+  - yarn
+  - npm i -g typescript
+
+script:
+  - tsc
