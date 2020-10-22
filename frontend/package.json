@@ -35,10 +35,8 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "BROWSER=none react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "parcel ./public/index.html -p 3000",
+    "build": "parcel build ./public/index.html"
   },
   "eslintConfig": {
     "extends": "react-app"
