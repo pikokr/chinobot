@@ -63,8 +63,7 @@ export default class Help extends Command {
 
         if (out.length > 1000) {
             const key = (await (await fetch('https://hastebin.com/documents', {method: 'POST', body: response})).json()).key
-            out = `내용이 너무 길어서 HasteBin 으로 옮겼어요!
-https://hastebin.com/${key}`
+            out = `내용이 너무 길어서 HasteBin 으로 옮겼어요!\nhttps://hastebin.com/${key}`
         }
         embed.setTitle(`컴파일 - \`${lang}\``)
         embed.addField('OUTPUT', out)
