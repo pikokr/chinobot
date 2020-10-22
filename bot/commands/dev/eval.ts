@@ -27,12 +27,12 @@ export default class Eval extends Command {
         await msg.util?.send(embed)
         const prev = Date.now()
         embed.addField('OUTPUT', '```js\n' + (await new Promise(resolve => {
-            if (script.startsWith('```js')) {
-                return resolve(eval(input))
-            } else if (script.startsWith('```ts')) {
+            if (script.startsWith('```ts')) {
                 const scr = transpile(input)
                 embed.addField('OUTPUT(Transpiled)', '```js\n' + (scr.length > 1000 ? scr.slice(0,1000) + '...' : scr) + '```')
                 return resolve(eval(scr))
+            } else {
+                return resolve(eval(input))
             }
         }).then(res=> {
 
