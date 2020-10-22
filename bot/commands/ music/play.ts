@@ -91,7 +91,7 @@ export default class Help extends Command {
             player = this.client.music.create({
                 guild: msg.guild!.id,
                 textChannel: msg.channel.id,
-                voiceChannel: msg.member!.voice.channelID
+                voiceChannel: msg.member!.voice.channelID!
             })
         }
 

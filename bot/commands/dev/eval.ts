@@ -31,12 +31,10 @@ export default class Eval extends Command {
                 return resolve(eval(input))
             } else if (script.startsWith('```ts')) {
                 const scr = transpile(input)
+                embed.addField('OUTPUT(Transpiled)', '```js\n' + (scr.length > 1000 ? scr.slice(0,1000) + '...' : scr) + '```')
                 return resolve(eval(scr))
             }
         }).then(res=> {
-            const t = transpile(input)
-
-            embed.addField('OUTPUT(Transpiled)', '```js\n' + (t.length > 1000 ? t.slice(0,1000) + '...' : t) + '```')
 
             embed.setColor('GREEN')
 

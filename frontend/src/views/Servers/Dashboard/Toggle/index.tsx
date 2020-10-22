@@ -22,14 +22,15 @@ import {
     Warning,
     List as ListIcon,
     ClearAll,
-    Block, MusicNote, SurroundSound, ExitToApp
+    Block, MusicNote, SurroundSound, ExitToApp, Dashboard, Search
 } from "@material-ui/icons";
 
 const categories = [
     {
         name: '기본',
         items: [
-            {name: '개발자', code: 'developer', icon: Code}
+            {name: '대시보드', code: 'dashboard', icon: Dashboard},
+            {name: '개발자', code: 'developer', icon: Code},
         ]
     },
     {
@@ -57,6 +58,16 @@ const categories = [
             {name: '스킵', icon: SkipNext, code: 'skip'},
             {name: '볼륨', icon: SurroundSound, code: 'volume'},
             {name: '현재곡', icon: MusicNote, code: 'now_playing'}
+        ]
+    },
+    {
+        name: '검색',
+        items: [
+            {
+                icon: Search,
+                code: 'npm',
+                name: 'NPM 검색'
+            }
         ]
     }
 ]

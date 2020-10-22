@@ -1,4 +1,4 @@
-name: Frontend Build Test
+name: Test Build
 
 on:
   push:
@@ -32,7 +32,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
+      - name: Install backend dependencies
+        run: npm install
+      - name: Copy config file for build test
+        run: cp config.inc.json config.json
+      - name: Build backend
+        run: npx tsc
+      - name: Install frontend dependencies
         run: cd frontend;npm install
       - name: Build
         run: cd frontend;npm run build
