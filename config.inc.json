@@ -29,5 +29,8 @@
       "password": "youshallnotpass"
     }
   ],
-  "myriad": ""
+  "myriad": "",
+  "sentry": {
+    "dsn": ""
+  }
 }

@@ -8,6 +8,11 @@ import schema from './graphql/schema'
 import cors from 'cors'
 import jwt from 'jsonwebtoken'
 import {connect} from "mongoose";
+import Sentry from '@sentry/node'
+
+Sentry.init({
+    ...config.sentry
+})
 
 global.namespaces = {}
 
