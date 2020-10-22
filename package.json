@@ -19,6 +19,7 @@
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "@sentry/node": "^5.27.0",
+    "@sentry/tracing": "^5.27.0",
     "apollo-server-express": "^2.18.2",
     "cors": "^2.8.5",
     "discord-akairo": "^8.1.0",
