@@ -7,5 +7,15 @@ before_script:
   - npm i -g typescript
   - cp config.inc.json config.json
 
-script:
-  - tsc
+jobs:
+  include:
+    - stage: Backend and bot
+      name: Test build backend and bot
+      script:
+        - tsc
+    - stage: Frontend
+      name: Frontend Build Test
+      script:
+        - cd frontend
+        - yarn
+        - yarn build
