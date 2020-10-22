@@ -7,6 +7,7 @@ before_script:
   - npm i -g yarn
   - yarn
   - npm i -g typescript
+  - cp config.inc.json config.json
 
 script:
   - tsc
