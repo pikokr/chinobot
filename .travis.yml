@@ -1,5 +1,8 @@
 language: nodejs
 
+node_js:
+  - 14.13.0
+
 before_script:
   - npm i -g yarn
   - yarn
