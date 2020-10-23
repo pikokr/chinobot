@@ -2,7 +2,7 @@ import {Command} from "discord-akairo";
 import {Message} from "discord.js";
 import config from '../../../config.json'
 
-export default class Help extends Command {
+export default class Developer extends Command {
     constructor() {
         super('developer', {
             aliases: ['개발자'],

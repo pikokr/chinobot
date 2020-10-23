@@ -2,7 +2,7 @@ import {Command} from "discord-akairo";
 import {Message} from "discord.js";
 import config from '../../../config.json'
 
-export default class Help extends Command {
+export default class Dashboard extends Command {
     constructor() {
         super('dashboard', {
             aliases: ['대시보드', 'dashboard', 'dash'],

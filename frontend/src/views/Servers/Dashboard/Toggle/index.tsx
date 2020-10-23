@@ -77,6 +77,26 @@ const categories = [
                 name: '바벨 트랜스파일',
                 code: 'babel',
                 icon: <Code/>
+            },
+            {
+                name: '타입스크립트 트랜스파일',
+                code: 'typescript',
+                icon: <Code/>
+            },
+            {
+                name: 'Discord.JS 검색',
+                code: 'search_djs',
+                icon: <Search/>
+            },
+            {
+                name: 'Discord.js-Commando 검색',
+                code: 'search_commando',
+                icon: <Search/>
+            },
+            {
+                name: 'discord-akairo 검색',
+                code: 'search_akairo',
+                icon: <Search/>
             }
         ]
     }
