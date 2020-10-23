@@ -29,5 +29,9 @@
       "password": "youshallnotpass"
     }
   ],
-  "myriad": ""
+  "myriad": "",
+  "sentry": {
+    "backend": "",
+    "bot": ""
+  }
 }

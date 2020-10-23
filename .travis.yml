@@ -1,0 +1,23 @@
+language: nodejs
+
+node_js:
+  - 14.13.0
+
+before_script:
+  - npm i -g typescript
+  - cp config.inc.json config.json
+
+jobs:
+  include:
+    - stage: Backend and bot
+      name: Test build backend and bot
+      script:
+        - tsc
+    - stage: Frontend
+      name: Frontend Build Test
+      before_script:
+        - npm i -g parcel
+      script:
+        - cd frontend
+        - yarn
+        - yarn build

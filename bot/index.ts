@@ -2,6 +2,15 @@ import {ShardingManager} from "discord.js";
 import * as path from "path";
 import config from '../config.json'
 import sio from 'socket.io-client'
+import * as Sentry from '@sentry/node'
+
+Sentry.init({
+    dsn: config.sentry.bot,
+})
+
+Sentry.setTags({
+    target: 'ShardManager'
+})
 
 const manager = new ShardingManager(path.join(__dirname, 'bot.ts'), {
     execArgv: [

@@ -5,7 +5,19 @@ import {Message, MessageEmbed} from "discord.js";
 import {connect} from "mongoose";
 import Music from "./util/music";
 
+import * as Sentry from '@sentry/node'
+
 const client = new Client()
+
+Sentry.init({
+    dsn: config.sentry.bot
+})
+
+client.once('ready', () => {
+    Sentry.setTags({
+        target: `Shard #${client.shard!.ids.reduce((acc,cur) => acc+cur)}`
+    })
+})
 
 connect(config.database, {
     useNewUrlParser: true,

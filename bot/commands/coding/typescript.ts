@@ -5,7 +5,7 @@ import fetch from "node-fetch";
 
 export default class Help extends Command {
     constructor() {
-        super('trans_typescript', {
+        super('typescript', {
             aliases: ['타입스크립트', 'ts', 'typescript'],
             description: '타입스크립트를 자바스크립트로 트랜스파일 하는 명령어',
             category: 'coding',
