@@ -11,6 +11,8 @@ enum Command {
     # general
     developer
     dashboard
+    ping
+    uptime
 
     # music
     play
