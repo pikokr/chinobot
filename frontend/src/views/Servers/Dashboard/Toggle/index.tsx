@@ -66,7 +66,59 @@ class Toggle extends Component<any> {
                         categories.map((category, i) => (
                             <div key={i}>
                                 <Typography variant="h5">
-                                    {category.name}
+                                    {category.name} <Switch
+                                    checked={category.items.filter(r => !this.state.disables.includes(r.code)).length === category.items.length}
+                                    onChange={async (event, checked) => {
+                                        if (checked) {
+                                            this.setState({
+                                                loading: true
+                                            })
+                                            await Promise.all(category.items.map(i => (
+                                                graphql(gql`
+                                                    query {
+                                                        guild(id: "${this.props.match.params.id.replace('"', '\\"')}") {
+                                                            enable(command: ${i.code})
+                                                        }
+                                                    }
+                                                `)
+                                            )))
+                                            const data = await graphql(gql`
+                                                query {
+                                                    guild(id: "${this.props.match.params.id.replace('"', '\\"')}") {
+                                                        disabled
+                                                    }
+                                                }
+                                            `)
+                                            this.setState({
+                                                disables: data.guild.disabled,
+                                                loading: false
+                                            })
+                                        } else {
+                                            this.setState({
+                                                loading: true
+                                            })
+                                            await Promise.all(category.items.map(i => (
+                                                graphql(gql`
+                                                    query {
+                                                        guild(id: "${this.props.match.params.id.replace('"', '\\"')}") {
+                                                            disable(command: ${i.code})
+                                                        }
+                                                    }
+                                                `)
+                                            )))
+                                            const data = await graphql(gql`
+                                                query {
+                                                    guild(id: "${this.props.match.params.id.replace('"', '\\"')}") {
+                                                        disabled
+                                                    }
+                                                }
+                                            `)
+                                            this.setState({
+                                                disables: data.guild.disabled,
+                                                loading: false
+                                            })
+                                        }
+                                    }}/>
                                     <Grid container spacing={2}>
                                         {
                                             category.items.map((item, idx) => (
@@ -81,7 +133,7 @@ class Toggle extends Component<any> {
                                                                 <ListItemSecondaryAction>
                                                                     <Switch
                                                                         checked={!this.state.disables.includes(item.code)}
-                                                                        onChange={async (event, checked) => {
+                                                                        onChange={async () => {
                                                                             this.setState(
                                                                                 {
                                                                                     loading: true
