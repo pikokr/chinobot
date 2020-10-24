@@ -1,7 +1,7 @@
 import {Command} from "discord-akairo";
 import {Message} from "discord.js";
 
-export default class Help extends Command {
+export default class Loop extends Command {
     constructor() {
         super('loop', {
             aliases: ['반복'],

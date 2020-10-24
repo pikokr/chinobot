@@ -45,7 +45,6 @@ export default class Music extends Manager {
             console.log(`[MUSIC:PLAYER] Queue ended on player in guild ${player.guild}`)
         })
         this.on('trackEnd', (player, track, payload) => {
-            if (!player.queue.length) player.destroy()
             console.log(`[MUSIC:PLAYER] Track ended, guild: ${player.guild}, Track: ${track.title}, payload: ${JSON.stringify(payload)}`)
         })
         this.on('socketClosed', (player, payload) => {

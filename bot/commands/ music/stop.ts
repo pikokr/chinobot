@@ -1,7 +1,7 @@
 import {Command} from "discord-akairo";
 import {Message} from "discord.js";
 
-export default class Help extends Command {
+export default class Stop extends Command {
     constructor() {
         super('stop', {
             aliases: ['정지'],

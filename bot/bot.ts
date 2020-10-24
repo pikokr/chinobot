@@ -14,7 +14,7 @@ const client = new Client()
 chokidar.watch(path.join(__dirname, 'commands')).on('all', (e, path1, stats) => {
     if (e !== 'change') return
     console.log(`Command change detected: ${path1}`)
-    delete require.cache[path1]
+    Object.keys(require.cache).filter(r=>!r.includes('node_modules')).forEach(r=>delete require.cache[r])
     const name: Command = new (require(path1).default)()
     // @ts-ignore
     const cmd = (client.commandHandler.categories.map(r => r).reduce((acc, cur) => [...acc.map(r => r),...cur.map(r=>r)]) as Command[]).find(r=>{
@@ -28,7 +28,7 @@ chokidar.watch(path.join(__dirname, 'commands')).on('all', (e, path1, stats) => 
 chokidar.watch(path.join(__dirname, 'inhibitors')).on('all', (e, path1, stats) => {
     if (e !== 'change') return
     console.log(`Inhibitor change detected: ${path1}`)
-    delete require.cache[path1]
+    Object.keys(require.cache).filter(r=>!r.includes('node_modules')).forEach(r=>delete require.cache[r])
     const name: Inhibitor = new (require(path1).default)()
     // @ts-ignore
     const cmd = (client.inhibitorHandler.categories.map(r => r).reduce((acc, cur) => [...acc.map(r => r),...cur.map(r=>r)]) as Command[]).find(r=>{
@@ -42,7 +42,7 @@ chokidar.watch(path.join(__dirname, 'inhibitors')).on('all', (e, path1, stats) =
 chokidar.watch(path.join(__dirname, 'listeners')).on('all', (e, path1, stats) => {
     if (e !== 'change') return
     console.log(`Listener change detected: ${path1}`)
-    delete require.cache[path1]
+    Object.keys(require.cache).filter(r=>!r.includes('node_modules')).forEach(r=>delete require.cache[r])
     const name: Listener = new (require(path1).default)()
     // @ts-ignore
     const cmd = (client.listenerHandler.categories.map(r => r).reduce((acc, cur) => [...acc.map(r => r),...cur.map(r=>r)]) as Command[]).find(r=>{

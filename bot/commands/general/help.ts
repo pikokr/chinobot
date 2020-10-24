@@ -23,6 +23,10 @@ export default class Help extends Command {
             if (!items.length) return
             embed.addField(category.id, items.map(r=>'`'+r.aliases[0]+'`').join(' '))
         })
+        embed.addField('사용된 오픈소스 프로젝트들', [{
+            name: '원더봇',
+            url: 'https://github.com/wonderlandpark/wonderbot'
+        }].map(r=>`[[${r.name}]](${r.url})`).join(' '))
         await msg.util?.send(embed)
     }
 }
