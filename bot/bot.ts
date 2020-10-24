@@ -1,5 +1,5 @@
 import Client from "./util/Client";
-import {Command, CommandHandler, InhibitorHandler, ListenerHandler} from "discord-akairo";
+import {Command, CommandHandler, Inhibitor, InhibitorHandler, Listener, ListenerHandler} from "discord-akairo";
 import config from '../config.json'
 import {Message, MessageEmbed} from "discord.js";
 import {connect} from "mongoose";
@@ -13,7 +13,7 @@ const client = new Client()
 
 chokidar.watch(path.join(__dirname, 'commands')).on('all', (e, path1, stats) => {
     if (e !== 'change') return
-    console.log(`Change detected: ${path1}`)
+    console.log(`Command change detected: ${path1}`)
     delete require.cache[path1]
     const name: Command = new (require(path1).default)()
     // @ts-ignore
@@ -23,6 +23,34 @@ chokidar.watch(path.join(__dirname, 'commands')).on('all', (e, path1, stats) => 
     cmd?.remove()
     client.commandHandler.register(name)
     console.log(`Reload command ${name.id}`)
+})
+
+chokidar.watch(path.join(__dirname, 'inhibitors')).on('all', (e, path1, stats) => {
+    if (e !== 'change') return
+    console.log(`Inhibitor change detected: ${path1}`)
+    delete require.cache[path1]
+    const name: Inhibitor = new (require(path1).default)()
+    // @ts-ignore
+    const cmd = (client.inhibitorHandler.categories.map(r => r).reduce((acc, cur) => [...acc.map(r => r),...cur.map(r=>r)]) as Command[]).find(r=>{
+        return r.id === name.id
+    })
+    cmd?.remove()
+    client.inhibitorHandler.register(name)
+    console.log(`Reload inhibitor ${name.id}`)
+})
+
+chokidar.watch(path.join(__dirname, 'listeners')).on('all', (e, path1, stats) => {
+    if (e !== 'change') return
+    console.log(`Listener change detected: ${path1}`)
+    delete require.cache[path1]
+    const name: Listener = new (require(path1).default)()
+    // @ts-ignore
+    const cmd = (client.listenerHandler.categories.map(r => r).reduce((acc, cur) => [...acc.map(r => r),...cur.map(r=>r)]) as Command[]).find(r=>{
+        return r.id === name.id
+    })
+    cmd?.remove()
+    client.listenerHandler.register(name)
+    console.log(`Reload inhibitor ${name.id}`)
 })
 
 
