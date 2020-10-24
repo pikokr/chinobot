@@ -2,7 +2,7 @@ import {Command} from "discord-akairo";
 import {Message} from "discord.js";
 import {formatTime} from "../../util/time";
 
-export default class Help extends Command {
+export default class Play extends Command {
     constructor() {
         super('play', {
             aliases: ['재생'],

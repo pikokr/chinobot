@@ -12,14 +12,6 @@ export default class Reload extends Command {
     async exec(msg: Message) {
         await msg.client.shard!.broadcastEval(client => {
             Object.keys(require.cache).filter(r=>!r.includes('node_modules')).forEach(r=>delete require.cache[r])
-            client.commandHandler.categories.map(r=>r.removeAll())
-            client.listenerHandler.categories.map(r=>r.removeAll())
-            client.inhibitorHandler.categories.map(r=>r.removeAll())
-            client.commandHandler.categories.clear()
-            client.listenerHandler.categories.clear()
-            client.commandHandler.loadAll()
-            client.listenerHandler.loadAll()
-            client.inhibitorHandler.loadAll()
         })
         await msg.react('✅')
     }

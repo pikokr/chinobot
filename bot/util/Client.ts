@@ -45,8 +45,8 @@ export default class Client extends AkairoClient {
             inhibitorHandler: this.inhibitorHandler
         })
         this.commandHandler.useInhibitorHandler(this.inhibitorHandler)
-        this.commandHandler.loadAll()
         this.listenerHandler.loadAll()
+        this.commandHandler.loadAll()
         this.inhibitorHandler.loadAll()
     }
 }

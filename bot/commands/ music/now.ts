@@ -3,7 +3,7 @@ import {Message, User} from "discord.js";
 import {formatTime} from "../../util/time";
 import createBar from "../../util/progress";
 
-export default class Help extends Command {
+export default class Now extends Command {
     constructor() {
         super('now_playing', {
             aliases: ['현재곡', 'np'],

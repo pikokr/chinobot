@@ -1,7 +1,7 @@
 import {Command} from "discord-akairo";
 import {Message} from "discord.js";
 
-export default class Help extends Command {
+export default class Volume extends Command {
     constructor() {
         super('volume', {
             aliases: ['볼륨'],
