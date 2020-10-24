@@ -5,7 +5,7 @@ import Guild from '../../../models/Guild'
 export default class Help extends Command {
     constructor() {
         super('help', {
-            aliases: ['도움말', 'help'],
+            aliases: ['도움말', 'help', '도움'],
             description: '도움말입니다',
             category: 'general'
         });
