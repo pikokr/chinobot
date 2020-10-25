@@ -11,9 +11,8 @@ export default class Uptime extends Command {
         });
     }
     async exec(msg: Message) {
-        const format = 'DD[일] HH[시간] mm[분] ss[초]'
         function f(duration: any) {
-            return `${duration._days}일 ${duration._data.hours}시간 ${duration._data.minutes}분 ${duration._data.seconds}초`
+            return `${duration._data.days}일 ${duration._data.hours}시간 ${duration._data.minutes}분 ${duration._data.seconds}초`
         }
         await msg.util!.send(msg.embed().setTitle('치노봇의 업타입!').setDescription([
             `클라이언트 업타임: ${f(moment.duration(this.client.uptime))}`,
