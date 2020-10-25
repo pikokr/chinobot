@@ -18,7 +18,7 @@ export default class Uptime extends Command {
         await msg.util!.send(msg.embed().setTitle('치노봇의 업타입!').setDescription([
             `클라이언트 업타임: ${f(moment.duration(this.client.uptime))}`,
             `프로세스 업타임: ${f(moment.duration(process.uptime() * 1000))}`,
-            `서버 업타임: ${f(moment.duration(require('os').uptime() * 1000))).format(format)}`
+            `서버 업타임: ${f(moment.duration(require('os').uptime() * 1000))}`
         ]))
     }
 }
