@@ -12,8 +12,8 @@ Sentry.setTags({
     target: 'ShardManager'
 })
 
-const manager = new ShardingManager(path.join(__dirname, 'bot.ts'), {
-    execArgv: [
+const manager = new ShardingManager(path.join(__dirname, process.env.NODE_ENV === 'production' ? 'bot.js' : 'bot.ts'), {
+    execArgv: process.env.NODE_ENV === 'production' ? [] : [
         '-r',
         'ts-node/register',
     ],
