@@ -1,6 +1,7 @@
 import {Command} from "discord-akairo";
 import {Message} from "discord.js";
 import {Aliases, postEval} from "../../util/Myriad";
+import fetch from 'node-fetch'
 
 export default class Help extends Command {
     constructor() {
