@@ -1,5 +1,5 @@
-import {ShardingManager} from "discord.js";
-import * as path from "path";
+import { ShardingManager } from "discord.js"
+import * as path from "path"
 import config from '../config.json'
 import sio from 'socket.io-client'
 import * as Sentry from '@sentry/node'
@@ -20,13 +20,14 @@ const manager = new ShardingManager(path.join(__dirname, process.env.NODE_ENV ==
     token: config.token
 })
 
-manager.on('shardCreate', shard => console.log(`Shard #${shard.id} created`))
+manager.on('shardCreate', (shard) => console.log(`Shard #${shard.id} created`))
 
 const io = sio(`${config.web.addr}/bot`, {
     query: {
         auth: config.web.socket.namespaces.bot.secret
     }
 })
+
 io.on('shards', async (data: any) => {
     const shards: any[] = []
     for (let shard of manager.shards.values()) {
@@ -38,9 +39,7 @@ io.on('shards', async (data: any) => {
             })
             `)
             shards.push({id: shard.id, online: shard.ready, ...data})
-        } else {
-            shards.push({id: shard.id, online: shard.ready})
-        }
+        } else { shards.push({id: shard.id, online: shard.ready}) }
     }
     io.emit('response', {data: shards, evt: data.event})
 })
@@ -60,15 +59,16 @@ io.on('guild', async (data: any) => {
 io.on('guilds', async (data: any) => {
     const result: Array<any> = []
     for (let i of data.payload.guilds) {
-        const res = (await Promise.all(manager.shards.filter(r=>r.ready).map(shard => shard.eval(`
-            this.guilds.cache.get('${i}')?.toJSON()
-        `)))).find(r=>r)
+        const res = (await Promise.all(
+            manager.shards.filter(r=> r.ready).map(shard => 
+               shard.eval(`this.guilds.cache.get('${i}')?.toJSON()`)
+            )
+        )).find(r=>r)
         result.push(res)
     }
-    io.emit('response', {evt: data.event, data: result || null})
+    io.emit('response', { evt: data.event, data: result || null })
 })
 
 io.on('connect', () => console.log('Connected to backend socket'))
 
-manager.spawn().then(() => {
-})
+manager.spawn()
